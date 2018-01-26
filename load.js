@@ -393,12 +393,6 @@ function load_css() {
     }
 }
 
-function load_ext_js(src) {
-    var imported = document.createElement('script');
-    imported.src = src;
-    document.head.appendChild(imported);
-}
-
 function add_notice() {
     var markdown = document.createElement('p');
     markdown.style.fontSize = "small";
@@ -410,10 +404,6 @@ function add_notice() {
 }
 
 function kkoment_load_in() {
-    load_ext_js('https://cdn.rawgit.com/jackmoore/autosize/4.0.0/dist/autosize.min.js');
-    load_ext_js('https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js');
-    load_ext_js('https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js');
-
     function render(j) {
         if(j.length == 0) {
             loading_msg.innerText = "아직 댓글이 없습니다.";
