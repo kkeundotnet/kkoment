@@ -2,6 +2,8 @@ function kkoment_load(div_id, url, thread_id) {
 
 // Global variables
 var div = document.getElementById(div_id);
+var loading_msg = document.createElement('p');
+div.appendChild(loading_msg);
 var comments_div = document.createElement('div');
 div.appendChild(comments_div);
 var last_id = -1;
@@ -47,7 +49,7 @@ function make_comment_div(j) {
     emoji.innerHTML = "&#x1F601;" // TODO emoji
 
     var name = document.createElement('td');
-    name.innerHTML = j.name;
+    name.innerText = j.name;
     name.innerHTML += " ";
 
     var date = document.createElement('span');
@@ -90,6 +92,7 @@ function add_comments_div(j) {
         var comment_div = make_comment_div(j[i]);
         update_last_id(j[i].id);
         comments_div.appendChild(comment_div);
+        loading_msg.style.display = "none";
     }
 }
 
@@ -236,12 +239,12 @@ function kkoment_load_in() {
     load_ext_js('https://cdn.rawgit.com/jackmoore/autosize/4.0.0/dist/autosize.min.js');
     load_ext_js('https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js');
 
-    var loading_msg = document.createElement('p');
-    div.appendChild(loading_msg);
-
     function render(j) {
-        loading_msg.style.display = "none";
-        add_comments_div(j);
+        if(j.length == 0) {
+            loading_msg.innerText = "아직 댓글이 없습니다.";
+        } else {
+            add_comments_div(j);
+        }
         add_input_form();
     }
 
