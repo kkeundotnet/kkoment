@@ -20,8 +20,6 @@ function is_safe_html($md) {
     return true;
 }
 
-sleep(2);                       // TODO remove
-
 $url = $_REQUEST['url'];
 $thread_id = $_REQUEST['thread_id'];
 $name = $_REQUEST['name'];
@@ -30,7 +28,7 @@ $pw = $_REQUEST['pw'];
 $hashed = hash("sha256", $name.$pw);
 $text = $_REQUEST['text'];
 
-// TODO proof-of-work check
+// TODO: check proof-of-work
 
 if(empty($url) || empty($thread_id) || empty($name) || empty($time) ||
    empty($pw) || empty($text)) {

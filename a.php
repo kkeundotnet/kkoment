@@ -6,9 +6,6 @@ if(!set_access_control($_REQUEST['url'])) {
     die();
 }
 
-// TODO: remove after implementing proof-of-work
-sleep(2);
-
 $url = $_REQUEST['url'];
 $thread_id = $_REQUEST['thread_id'];
 
