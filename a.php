@@ -1,5 +1,10 @@
 <?php
-header("Access-Control-Allow-Origin: ".$_REQUEST['url']);
+require_once('access_control.php');
+
+if(!set_access_control($_REQUEST['url'])) {
+    echo "0";
+    die();
+}
 
 // TODO: remove after implementing proof-of-work
 sleep(2);

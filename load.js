@@ -1,5 +1,16 @@
-function is_safe_markdown(s) {
-    // TODO
+function is_safe_html(md, error_msg) {
+    var el = document.createElement( 'html' );
+    el.innerHTML = (new showdown.Converter()).makeHtml(md);
+
+    var block_tags = ['script', 'iframe', 'frame', 'img'];
+    var block_tags_leng = block_tags.length;
+    for (var i = 0; i < block_tags_leng; i++) {
+        var block_tag = block_tags[i];
+        if(el.getElementsByTagName(block_tag).length != 0) {
+            error_msg('ERROR: '+block_tag+' 태그는 사용이 금지되어 있습니다.');
+            return false;
+        }
+    }
     return true;
 }
 
@@ -58,6 +69,7 @@ function make_comment_div(j) {
 }
 
 function refresh() {
+    // TODO refresh
     alert('refresh called');
 }
 
@@ -104,15 +116,14 @@ function add_input_form(url, thread_id, div) {
     send_button.onclick = function() {
         name = name_box.value;
         pw = pw_box.value;
-        text = textarea.value;
+        text = (new showdown.Converter()).makeHtml(textarea.value);
         time = (new Date()).toUTCString();
 
         if(!name || !pw || !text) {
             error_msg('ERROR: 이름, 비밀번호, 댓글 중 하나가 비었어요.');
             return
         }
-        if(!is_safe_markdown(text)) {
-            error_msg('ERROR: 안전한 마크다운 형식이 아닙니다.');
+        if(!is_safe_html(text, error_msg)) {
             return
         }
 
@@ -183,7 +194,16 @@ function load_css() {
     }
 }
 
+function load_ext_js(src) {
+    var imported = document.createElement('script');
+    imported.src = src;
+    document.head.appendChild(imported);
+}
+
 function kkoment_load(div_id, url, thread_id) {
+    load_ext_js('https://cdn.rawgit.com/jackmoore/autosize/4.0.0/dist/autosize.min.js');
+    load_ext_js('https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js');
+
     var loading_msg = document.createElement('p');
     var div = document.getElementById(div_id);
     div.appendChild(loading_msg);
@@ -196,7 +216,7 @@ function kkoment_load(div_id, url, thread_id) {
 
     function process_result(http_request) {
         if (http_request.readyState == 4) {
-            if (http_request.status == 200) {
+            if (http_request.status == 200 && http_request.responseText != "0") {
                 render(JSON.parse(http_request.responseText));
             } else {
                 loading_msg.innerText = "loading kkoments error";

@@ -1,4 +1,25 @@
 <?php
+require_once('access_control.php');
+require_once('simple_html_dom.php');
+
+if(!set_access_control($_REQUEST['url'])) {
+    echo "0";
+    die();
+}
+
+function is_safe_html($md) {
+    $html = str_get_html($md);
+
+    $block_tags = array('script', 'iframe', 'frame', 'img');
+    foreach ($block_tags as $block_tag) {
+        if(count($html->find($block_tag)) != 0) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 sleep(2);                       // TODO remove
 
 $url = $_REQUEST['url'];
@@ -10,7 +31,16 @@ $hashed = hash("sha256", $name.$pw);
 $text = $_REQUEST['text'];
 
 // TODO proof-of-work check
-// TODO text validity check
+
+if(empty($url) || empty($thread_id) || empty($name) || empty($time) || empty($pw) || empty($text)) {
+    echo "0";
+    die();
+}
+
+if(!is_safe_html($text)) {
+    echo "0";
+    die();
+}
 
 // add data
 $db = new SQLite3('_db/all');
