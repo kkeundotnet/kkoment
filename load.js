@@ -1,3 +1,11 @@
+function make_http_request() {
+    if (window.XMLHttpRequest) {
+        return new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+        return new ActiveXObject("Microsoft.XMLHTTP");
+    }
+}
+
 function kkoment_load(div_id, url, thread_id) {
 
 // Global variables
@@ -148,19 +156,11 @@ function is_safe_html(md, error_msg) {
     return true;
 }
 
-function make_http_request() {
-    if (window.XMLHttpRequest) {
-        return new XMLHttpRequest();
-    } else if (window.ActiveXObject) {
-        return new ActiveXObject("Microsoft.XMLHTTP");
-    }
-}
-
 function gen_space() {
     return document.createTextNode(' ');
 }
 
-function make_comment_div(j, is_preview = false) {
+function make_comment_div(j, is_preview=false) {
     var comment_div = document.createElement('div');
 
     var emoji = document.createElement('td');
@@ -435,4 +435,33 @@ function kkoment_load_in() {
 }
 
 kkoment_load_in();
+}
+
+function kkoment_load_n(url, cb=function(n){return n;}) {
+    function render(j) {
+        var spans = document.getElementsByClassName('kkoment-num');
+        for (var i = 0; i < spans.length; i++) {
+            var n = j[spans[i].dataset.kkomentThreadId];
+            if(!n) { n = 0; }
+            spans[i].innerText = cb(n);
+        }
+    }
+
+    function process_result(http_request) {
+        if (http_request.readyState == 4) {
+            if (http_request.status == 200 && http_request.responseText != "0") {
+                render(JSON.parse(http_request.responseText));
+            } else {
+                alert('Loading kkoment comments number is failed.');
+            }
+        }
+    };
+
+    var default_src = "https://kkoment.kkeun.net/a.php"
+                    + "?url=" + encodeURI(url)
+                    + "&only_num=1";
+    var http_request = make_http_request();
+    http_request.onreadystatechange = function(){process_result(http_request);};
+    http_request.open('GET', default_src);
+    http_request.send(null);
 }
