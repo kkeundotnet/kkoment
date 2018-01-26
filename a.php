@@ -13,7 +13,7 @@ $url = $_REQUEST['url'];
 $thread_id = $_REQUEST['thread_id'];
 
 // get data
-$db = new SQLite3('_db/all');
+$db = new SQLite3('_db/all.db');
 $stmt = $db->prepare(
 'SELECT id, name, time, hashed, text, removed FROM comments
  WHERE url=:url AND thread_id=:thread_id');
