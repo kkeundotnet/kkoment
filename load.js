@@ -1,3 +1,19 @@
+function kkoment_load(div_id, url, thread_id) {
+
+// Global variables
+var div = document.getElementById(div_id);
+var comments_div = document.createElement('div');
+div.appendChild(comments_div);
+var last_id = -1;
+var default_src = "https://kkoment.kkeun.net/a.php"
+                + "?url=" + encodeURI(url)
+                + "&thread_id=" + encodeURI(thread_id);
+
+function update_last_id(new_id) {
+    if(new_id > last_id)
+        last_id = new_id;
+}
+
 function is_safe_html(md, error_msg) {
     var el = document.createElement( 'html' );
     el.innerHTML = (new showdown.Converter()).makeHtml(md);
@@ -68,12 +84,41 @@ function make_comment_div(j) {
     return comment_div;
 }
 
-function refresh() {
-    // TODO refresh
-    alert('refresh called');
+function add_comments_div(j) {
+    var j_length = j.length;
+    for (var i = 0; i < j_length; i++) {
+        var comment_div = make_comment_div(j[i]);
+        update_last_id(j[i].id);
+        comments_div.appendChild(comment_div);
+    }
 }
 
-function add_input_form(url, thread_id, div) {
+function add_last_comments_div(j) {
+    var filtered = j.filter(function(e){return e.id > last_id;});
+    add_comments_div(filtered);
+}
+
+function refresh(normal_msg, error_msg) {
+    function process_refresh_result(http_request) {
+        if (http_request.readyState == 4) {
+            if (http_request.status == 200 && http_request.responseText != "0") {
+                add_last_comments_div(JSON.parse(http_request.responseText));
+                normal_msg('리프레시 되었습니다.');
+            } else {
+                error_msg("리프레시에 실패하였습니다.");
+            }
+        } else {
+            normal_msg("리프레시 중입니다...");
+        }
+    }
+
+    var http_request = make_http_request();
+    http_request.onreadystatechange = function(){process_refresh_result(http_request);};
+    http_request.open('GET', default_src);
+    http_request.send(null);
+}
+
+function add_input_form() {
     var name_box = document.createElement('input');
     name_box.type = "text";
     name_box.placeholder = "이름";
@@ -104,13 +149,13 @@ function add_input_form(url, thread_id, div) {
                 name_box.value = "";
                 pw_box.value = "";
                 textarea.value = "";
-                normal_msg('전송에 성공하였습니다.');
-                refresh();
+                normal_msg('전송 되었습니다.');
+                refresh(normal_msg, error_msg);
             } else {
                 error_msg('전송에 실패하였습니다.');
             }
         } else {
-            normal_msg('전송 중입니다.');
+            normal_msg('전송 중입니다...');
         }
     };
     send_button.onclick = function() {
@@ -167,19 +212,6 @@ function add_input_form(url, thread_id, div) {
     div.appendChild(input_form_div);
 }
 
-function add_comments_div(j, div) {
-    var comments_div = document.createElement('div');
-
-    var j_length = j.length;
-    for (var i = 0; i < j_length; i++) {
-        var comment_div = make_comment_div(j[i]);
-        comments_div.appendChild(comment_div);
-    }
-
-    div.appendChild(comments_div);
-}
-
-
 function load_css() {
     var css_id = 'kkoment.css';
     if(!document.getElementById(css_id)) {
@@ -200,18 +232,17 @@ function load_ext_js(src) {
     document.head.appendChild(imported);
 }
 
-function kkoment_load(div_id, url, thread_id) {
+function kkoment_load_in() {
     load_ext_js('https://cdn.rawgit.com/jackmoore/autosize/4.0.0/dist/autosize.min.js');
     load_ext_js('https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js');
 
     var loading_msg = document.createElement('p');
-    var div = document.getElementById(div_id);
     div.appendChild(loading_msg);
 
     function render(j) {
         loading_msg.style.display = "none";
-        add_comments_div(j, div);
-        add_input_form(url, thread_id, div);
+        add_comments_div(j);
+        add_input_form();
     }
 
     function process_result(http_request) {
@@ -228,12 +259,11 @@ function kkoment_load(div_id, url, thread_id) {
 
     load_css();
 
-    var src = "https://kkoment.kkeun.net/a.php"
-        + "?url=" + encodeURI(url)
-        + "&thread_id=" + encodeURI(thread_id);
-
     var http_request = make_http_request();
     http_request.onreadystatechange = function(){process_result(http_request);};
-    http_request.open('GET', src);
+    http_request.open('GET', default_src);
     http_request.send(null);
+}
+
+kkoment_load_in();
 }
