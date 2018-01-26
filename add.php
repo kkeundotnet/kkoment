@@ -1,13 +1,15 @@
 <?php
+sleep(2);                       // TODO remove
+
 $url = $_REQUEST['url'];
 $thread_id = $_REQUEST['thread_id'];
 $name = $_REQUEST['name'];
 $time = $_REQUEST['time'];
-$hashed = $_REQUEST['hashed'];
+$pw = $_REQUEST['pw'];
+$hashed = hash("sha256", $name.$pw);
 $text = $_REQUEST['text'];
 
-// TODO hash check
-
+// TODO proof-of-work check
 // TODO text validity check
 
 // add data
