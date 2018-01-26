@@ -139,7 +139,7 @@ function add_input_form() {
     pw_box.placeholder = "비밀번호";
 
     var textarea = document.createElement('textarea');
-    textarea.placeholder = "댓글을 써 보세요.";
+    textarea.placeholder = "마크다운 문법으로 댓글을 써 보세요.";
     textarea.className += " kkoment-textarea";
     autosize(textarea);
 
@@ -283,6 +283,16 @@ function load_ext_js(src) {
     document.head.appendChild(imported);
 }
 
+function add_notice() {
+    var markdown = document.createElement('p');
+    markdown.style.fontSize = "small";
+    markdown.innerHTML =
+        "&#x26A0; 댓글은 " +
+        "<a href=\"https://daringfireball.net/projects/markdown/syntax\">" +
+        "마크다운 문법</a>으로 쓰되, 그림, 프레임, 스크립트는 보안을 위해 사용할 수 없습니다.";
+    div.appendChild(markdown);
+}
+
 function kkoment_load_in() {
     load_ext_js('https://cdn.rawgit.com/jackmoore/autosize/4.0.0/dist/autosize.min.js');
     load_ext_js('https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js');
@@ -295,6 +305,7 @@ function kkoment_load_in() {
             add_comments_div(j);
         }
         add_input_form();
+        add_notice();
     }
 
     function process_result(http_request) {
