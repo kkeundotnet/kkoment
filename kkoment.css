@@ -1,0 +1,34 @@
+.kkoment-textarea {
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.kkoment-emoji {
+    width: 35px;
+    text-align: center;
+    font-size: x-large;
+}
+
+.kkoment-table {
+    width: 100%;
+}
+
+.kkoment-date {
+    font-size: small;
+    color: gray;
+}
+
+.kkoment-hash {
+    font-size: 7px;
+    color: gray;
+}
+
+.kkoment-text {
+    padding: 0px 0px 0px 40px;
+}
+
+.kkoment-hr {
+    border: 0.5px dashed green;
+}

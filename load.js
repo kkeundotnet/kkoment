@@ -11,14 +11,62 @@ function kkoment_load(div_id, url, thread_id) {
         div.appendChild(loading_msg);
     }
 
-    function add_comment_div(s) {
-        var comment_p = document.createElement('p');
-        comment_p.innerHTML = "TODO: add comment here";
-
+    function make_comment_div(j) {
         var comment_div = document.createElement('div');
-        comment_div.appendChild(comment_p);
-        div.appendChild(comment_div);
-        // TODO
+
+        var emoji = document.createElement('td');
+        emoji.rowSpan = "2";
+        emoji.className += " kkoment-emoji";
+        emoji.innerHTML = "&#x1F601;" // TODO emoji
+
+        var name = document.createElement('td');
+        name.innerHTML = j.name;
+        name.innerHTML += " ";
+
+        var date = document.createElement('span');
+        date.className += " kkoment-date";
+        date.innerHTML = j.time;
+        name.appendChild(date);
+
+        var hash = document.createElement('td');
+        hash.className += " kkoment-hash";
+        hash.innerHTML = j.hashed;
+
+        var tr1 = document.createElement('tr');
+        tr1.appendChild(emoji);
+        tr1.appendChild(name);
+
+        var tr2 = document.createElement('tr');
+        tr2.appendChild(hash);
+
+        var info = document.createElement('table');
+        info.className += " kkoment-table";
+        info.appendChild(tr1);
+        info.appendChild(tr2);
+        comment_div.appendChild(info);
+
+        var text = document.createElement('div');
+        text.className += " kkoment-text";
+        text.innerHTML = j.text;
+        comment_div.appendChild(text);
+
+        var hr = document.createElement('hr');
+        hr.className += " kkoment-hr";
+        comment_div.appendChild(hr);
+
+        return comment_div;
+    }
+
+    function add_comments_div(j) {
+        var comments_div = document.createElement('div');
+
+        var j_length = j.length;
+        for (var i = 0; i < j_length; i++) {
+            var comment_div = make_comment_div(j[i]);
+            comments_div.appendChild(comment_div);
+        }
+
+        div.appendChild(comments_div);
     }
 
     function add_input_form() {
@@ -32,14 +80,36 @@ function kkoment_load(div_id, url, thread_id) {
 
         var textarea = document.createElement('textarea');
         textarea.placeholder = "댓글을 써 보세요.";
-        textarea.style.width = "100%";
-        textarea.style["-webkit-box-sizing"] = "border-box";
-        textarea.style["-moz-box-sizing"] = "border-box";
-        textarea.style["box-sizing"] = "border-box";
+        textarea.className += " kkoment-textarea";
         autosize(textarea);
 
         var send_button = document.createElement('button');
-        send_button.onclick = function() { alert('hello world'); };
+
+        function refresh() {
+            alert('refresh called'); // TODO
+        };
+
+        send_button.onclick = function() {
+            name = name_box.value;
+            pw = pw_box.value;
+            text = textarea.value;
+            // TODO: validate inputs
+            time = "todo";
+            hashed = "todo";
+
+            var params = new FormData();
+            params.append('url', url);
+            params.append('thread_id', thread_id);
+            params.append('name', name);
+            params.append('time', time);
+            params.append('hashed', hashed);
+            params.append('text', text);
+
+            var src = "https://kkoment.kkeun.net/add.php";
+            http_request.onreadystatechange = refresh();
+            http_request.open('POST', src);
+            http_request.send(params);
+        };
         send_button.innerHTML = "전송";
 
         var space = document.createTextNode(' ');
@@ -63,17 +133,16 @@ function kkoment_load(div_id, url, thread_id) {
     }
 
 
-    function render(s) {
-        div.innerHTML = s;      // TODO: remove
+    function render(j) {
         loading_msg.style.display = "none";
-        add_comment_div(s);
+        add_comments_div(j);
         add_input_form();
     }
 
     function process_result() {
         if (http_request.readyState == 4) {
             if (http_request.status == 200) {
-                render(http_request.responseText);
+                render(JSON.parse(http_request.responseText));
             } else {
                 loading_msg.innerText = "loading kkoments error";
             }
@@ -81,6 +150,22 @@ function kkoment_load(div_id, url, thread_id) {
             loading_msg.innerText = "loading kkoments...";
         }
     };
+
+    function load_css() {
+        var css_id = 'kkoment.css';
+        if(!document.getElementById(css_id)) {
+            var head = document.getElementsByTagName('head')[0];
+            var link = document.createElement('link');
+            link.id = css_id;
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = 'https://kkoment.kkeun.net/kkoment.css';
+            link.media = 'all';
+            head.appendChild(link);
+        }
+    }
+
+    load_css();
 
     var src = "https://kkoment.kkeun.net/a.php"
         + "?url=" + encodeURI(url)
