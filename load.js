@@ -40,7 +40,11 @@ function make_http_request() {
     }
 }
 
-function make_comment_div(j) {
+function gen_space() {
+    return document.createTextNode(' ');
+}
+
+function make_comment_div(j, is_preview = false) {
     var comment_div = document.createElement('div');
 
     var emoji = document.createElement('td');
@@ -48,22 +52,24 @@ function make_comment_div(j) {
     emoji.className += " kkoment-emoji";
     emoji.innerHTML = "&#x1F601;" // TODO emoji
 
-    var name = document.createElement('td');
-    name.innerText = j.name;
-    name.innerHTML += " ";
+    var name = document.createTextNode(j.name);
 
     var date = document.createElement('span');
     date.className += " kkoment-date";
-    date.innerHTML = (new Date(j.time)).toLocaleString();
-    name.appendChild(date);
+    date.innerText = (new Date(j.time)).toLocaleString();
+
+    var name_date = document.createElement('td');
+    name_date.appendChild(name);
+    name_date.appendChild(gen_space());
+    name_date.appendChild(date);
 
     var hash = document.createElement('td');
     hash.className += " kkoment-hash";
-    hash.innerHTML = j.hashed;
+    hash.innerText = j.hashed;
 
     var tr1 = document.createElement('tr');
     tr1.appendChild(emoji);
-    tr1.appendChild(name);
+    tr1.appendChild(name_date);
 
     var tr2 = document.createElement('tr');
     tr2.appendChild(hash);
@@ -79,9 +85,11 @@ function make_comment_div(j) {
     text.innerHTML = j.text;
     comment_div.appendChild(text);
 
-    var hr = document.createElement('hr');
-    hr.className += " kkoment-hr";
-    comment_div.appendChild(hr);
+    if(!is_preview) {
+        var hr = document.createElement('hr');
+        hr.className += " kkoment-hr";
+        comment_div.appendChild(hr);
+    }
 
     return comment_div;
 }
@@ -146,12 +154,37 @@ function add_input_form() {
     };
 
     var send_button = document.createElement('button');
+    send_button.innerHTML = "전송";
+
+    var p1 = document.createElement('p');
+    p1.appendChild(name_box);
+    p1.appendChild(gen_space());
+    p1.appendChild(pw_box);
+
+    var p2 = document.createElement('p');
+    p2.appendChild(textarea);
+
+    var typing = document.createElement('div');
+    typing.appendChild(p1);
+    typing.appendChild(p2);
+
+    var preview = document.createElement('div');
+    preview.className += " kkoment-preview";
+    preview.style.display = "none";
+
+    var preview_button = document.createElement('button');
+    preview_button.innerHTML = "미리보기";
+
     function process_add_result(http_request, send_button) {
         if (http_request.readyState == 4) {
             if (http_request.status == 200 && http_request.responseText == "1") {
                 name_box.value = "";
                 pw_box.value = "";
                 textarea.value = "";
+                if(preview.style.display != "none") {
+                    preview.style.display = "none";
+                    typing.style.display = "";
+                }
                 normal_msg('전송 되었습니다.');
                 refresh(normal_msg, error_msg);
             } else {
@@ -162,6 +195,7 @@ function add_input_form() {
             normal_msg('전송 중입니다...');
         }
     };
+
     send_button.onclick = function() {
         name = name_box.value;
         pw = pw_box.value;
@@ -196,26 +230,35 @@ function add_input_form() {
         http_request.open('POST', src);
         http_request.send(params);
     };
-    send_button.innerHTML = "전송";
 
-    var space = document.createTextNode(' ');
-
-    var p1 = document.createElement('p');
-    p1.appendChild(name_box);
-    p1.appendChild(space);
-    p1.appendChild(pw_box);
-
-    var p2 = document.createElement('p');
-    p2.appendChild(textarea);
+    preview_button.onclick = function() {
+        if(preview.style.display == "none") {
+            preview.innerHTML = "";
+            var j = {
+                name: name_box.value,
+                text: (new showdown.Converter()).makeHtml(textarea.value),
+                time: (new Date()).toUTCString(),
+                hashed: sha256(name_box.value+pw_box.value),
+            };
+            preview.appendChild(make_comment_div(j, true));
+            typing.style.display = "none";
+            preview.style.display = "";
+        } else {
+            preview.style.display = "none";
+            typing.style.display = "";
+        }
+    };
 
     var p3 = document.createElement('p');
+    p3.appendChild(preview_button);
+    p3.appendChild(gen_space());
     p3.appendChild(send_button);
-    p3.appendChild(space);
+    p3.appendChild(gen_space());
     p3.appendChild(msg_console);
 
     var input_form_div = document.createElement('div');
-    input_form_div.appendChild(p1);
-    input_form_div.appendChild(p2);
+    input_form_div.appendChild(typing);
+    input_form_div.appendChild(preview);
     input_form_div.appendChild(p3);
     div.appendChild(input_form_div);
 }
@@ -243,6 +286,7 @@ function load_ext_js(src) {
 function kkoment_load_in() {
     load_ext_js('https://cdn.rawgit.com/jackmoore/autosize/4.0.0/dist/autosize.min.js');
     load_ext_js('https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js');
+    load_ext_js('https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js');
 
     function render(j) {
         if(j.length == 0) {
