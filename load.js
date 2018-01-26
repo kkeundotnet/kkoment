@@ -146,7 +146,7 @@ function add_input_form() {
     };
 
     var send_button = document.createElement('button');
-    function process_add_result(http_request) {
+    function process_add_result(http_request, send_button) {
         if (http_request.readyState == 4) {
             if (http_request.status == 200 && http_request.responseText == "1") {
                 name_box.value = "";
@@ -157,6 +157,7 @@ function add_input_form() {
             } else {
                 error_msg('전송에 실패하였습니다.');
             }
+            send_button.disabled = false;
         } else {
             normal_msg('전송 중입니다...');
         }
@@ -175,6 +176,8 @@ function add_input_form() {
             return
         }
 
+        send_button.disabled = true;
+
         // TODO: generate proof-of-work
 
         var params = new FormData();
@@ -187,7 +190,9 @@ function add_input_form() {
 
         var src = "https://kkoment.kkeun.net/add.php";
         var http_request = make_http_request();
-        http_request.onreadystatechange = function(){process_add_result(http_request);}
+        http_request.onreadystatechange = function(){
+            process_add_result(http_request, send_button);
+        };
         http_request.open('POST', src);
         http_request.send(params);
     };
