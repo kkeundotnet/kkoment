@@ -11,7 +11,7 @@ $url = $_REQUEST['url'];
 $thread_id = $_REQUEST['thread_id'];
 $only_num = $_REQUEST['only_num'];
 
-$db = new SQLite3('_db/all.db');
+$db = new SQLite3('_db/kkoment.db');
 
 function incr_all($thread_id, &$all) {
     if(array_key_exists($thread_id, $all)) {

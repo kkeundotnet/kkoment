@@ -42,7 +42,7 @@ if(!is_safe_html($text)) {
 }
 
 // check duplication
-$db = new SQLite3('_db/all.db');
+$db = new SQLite3('_db/kkoment.db');
 $stmt = $db->prepare(
 'SELECT id FROM comments
  WHERE url=:url AND thread_id=:thread_id AND hashed=:hashed AND time=:time
@@ -59,7 +59,7 @@ if($result->fetchArray()) {
 }
 
 // add data
-$db = new SQLite3('_db/all.db');
+$db = new SQLite3('_db/kkoment.db');
 $stmt = $db->prepare(
 'INSERT INTO comments (url, thread_id, name, time, hashed, text)
  VALUES (:url, :thread_id, :name, :time, :hashed, :text)');

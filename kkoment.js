@@ -15,7 +15,7 @@ div.appendChild(loading_msg);
 var comments_div = document.createElement('div');
 div.appendChild(comments_div);
 var last_id = -1;
-var default_src = "https://kkoment.kkeun.net/a.php"
+var default_src = "https://kkoment.kkeun.net/thread.php"
                 + "?url=" + encodeURI(url)
                 + "&thread_id=" + encodeURI(thread_id);
 var emojis =
@@ -338,7 +338,7 @@ function add_input_form() {
         params.append('time', time);
         params.append('text', text);
 
-        var src = "https://kkoment.kkeun.net/add.php";
+        var src = "https://kkoment.kkeun.net/comment.php";
         var http_request = make_http_request();
         http_request.onreadystatechange = function(){
             process_add_result(http_request, send_button);
