@@ -104,7 +104,7 @@ How to use
 있다.
 
 ``````
-<span class="kkoment-num" data-kkoment-thread-id="hello"></span></p>
+<span class="kkoment-num" data-kkoment-thread-id="hello"></span>
 <script>kkoment_load_n("https://kkoment.kkeun.net", function(n){
     if(n) {
         return n+"개";
