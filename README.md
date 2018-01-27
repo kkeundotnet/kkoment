@@ -66,7 +66,7 @@ How to use
 <script src='https://cdn.rawgit.com/jackmoore/autosize/4.0.0/dist/autosize.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js'></script>
-<script src="https://kkoment.kkeun.net/kkoment.js" charset="UTF-8"></script>
+<script src="https://cdn.rawgit.com/kkeundotnet/kkoment/0.2/kkoment.min.js" charset="UTF-8"></script>
 ``````
 
 ### 댓글 쓰레드 넣기
