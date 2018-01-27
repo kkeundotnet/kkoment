@@ -6,6 +6,28 @@ function make_http_request() {
     }
 }
 
+// from https://stackoverflow.com/questions/11076975/insert-text-into-textarea-at-cursor-position-javascript
+function insertAtCursor(myField, myValue) {
+    //IE support
+    if (document.selection) {
+        myField.focus();
+        sel = document.selection.createRange();
+        sel.text = myValue;
+    }
+    //MOZILLA and others
+    else if (myField.selectionStart || myField.selectionStart == '0') {
+        var startPos = myField.selectionStart;
+        var endPos = myField.selectionEnd;
+        myField.value = myField.value.substring(0, startPos)
+            + myValue
+            + myField.value.substring(endPos, myField.value.length);
+        myField.selectionStart = startPos + myValue.length;
+        myField.selectionEnd = startPos + myValue.length;
+    } else {
+        myField.value += myValue;
+    }
+}
+
 function kkoment_load(div_id, url, thread_id) {
 
 // Global variables
@@ -277,12 +299,9 @@ function add_input_form() {
     p1.appendChild(gen_space());
     p1.appendChild(pw_box);
 
-    var p2 = document.createElement('p');
-    p2.appendChild(textarea);
-
     var typing = document.createElement('div');
     typing.appendChild(p1);
-    typing.appendChild(p2);
+    typing.appendChild(textarea);
 
     var preview = document.createElement('div');
     preview.className += " kkoment-preview";
@@ -294,8 +313,6 @@ function add_input_form() {
     function process_add_result(http_request, send_button) {
         if (http_request.readyState == 4) {
             if (http_request.status == 200 && http_request.responseText == "1") {
-                name_box.value = "";
-                pw_box.value = "";
                 textarea.value = "";
                 if(preview.style.display != "none") {
                     preview.style.display = "none";
@@ -365,17 +382,51 @@ function add_input_form() {
         }
     };
 
+    var emoji_button = document.createElement('button');
+    emoji_button.innerHTML = "&#x1F353;";
+
     var p3 = document.createElement('p');
+    p3.appendChild(emoji_button);
+    p3.appendChild(gen_space());
     p3.appendChild(preview_button);
     p3.appendChild(gen_space());
     p3.appendChild(send_button);
     p3.appendChild(gen_space());
     p3.appendChild(msg_console);
 
+    var emojis_div = document.createElement('div');
+    emojis_div.style.display = "none";
+    emojis_div.className += " kkoment-emojis-div";
+    function gen_emoji_span(emoji) {
+        var span = document.createElement('span');
+        var emoji_html = "&#x"+emoji+";"
+        span.innerHTML = emoji_html;
+        var a = document.createElement('a');
+        a.appendChild(span);
+        a.onclick = function() {
+            insertAtCursor(textarea, emoji_html);
+            autosize.update(textarea);
+        };
+        return a;
+    };
+    for(var i = 0; i < emojis.length; i++) {
+        emojis_div.appendChild(gen_emoji_span(emojis[i]));
+        emojis_div.appendChild(document.createTextNode(' '));
+    }
+
+    emoji_button.onclick = function() {
+        if(emojis_div.style.display == "none") {
+            emojis_div.style.display = "";
+        } else {
+            emojis_div.style.display = "none";
+        }
+    };
+
     var input_form_div = document.createElement('div');
     input_form_div.appendChild(typing);
     input_form_div.appendChild(preview);
     input_form_div.appendChild(p3);
+    input_form_div.appendChild(emojis_div);
     div.appendChild(input_form_div);
 }
 

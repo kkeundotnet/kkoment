@@ -36,3 +36,11 @@
 .kkoment-preview {
     background-color: LightGoldenRodYellow;
 }
+
+.kkoment-emojis-div {
+    width: 100%;
+    height: 200px;
+    overflow: auto;
+    font-size: x-large;
+    border: 1px solid gray;
+}
