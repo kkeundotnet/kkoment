@@ -318,6 +318,7 @@ function add_input_form() {
                     preview.style.display = "none";
                     typing.style.display = "";
                 }
+                autosize.update(textarea);
                 normal_msg('전송 되었습니다.');
                 refresh(normal_msg, error_msg);
             } else {
@@ -364,21 +365,26 @@ function add_input_form() {
         http_request.send(params);
     };
 
+    function preview_update() {
+        preview.innerHTML = "";
+        var j = {
+            name: name_box.value,
+            text: (new showdown.Converter()).makeHtml(textarea.value),
+            time: (new Date()).toUTCString(),
+            hashed: sha256(name_box.value+pw_box.value),
+        };
+        preview.appendChild(make_comment_div(j, true));
+    };
+
     preview_button.onclick = function() {
         if(preview.style.display == "none") {
-            preview.innerHTML = "";
-            var j = {
-                name: name_box.value,
-                text: (new showdown.Converter()).makeHtml(textarea.value),
-                time: (new Date()).toUTCString(),
-                hashed: sha256(name_box.value+pw_box.value),
-            };
-            preview.appendChild(make_comment_div(j, true));
+            preview_update();
             typing.style.display = "none";
             preview.style.display = "";
         } else {
             preview.style.display = "none";
             typing.style.display = "";
+            autosize.update(textarea);
         }
     };
 
@@ -401,13 +407,14 @@ function add_input_form() {
         var span = document.createElement('span');
         var emoji_html = "&#x"+emoji+";"
         span.innerHTML = emoji_html;
-        var a = document.createElement('a');
-        a.appendChild(span);
-        a.onclick = function() {
+        span.onclick = function() {
             insertAtCursor(textarea, emoji_html);
             autosize.update(textarea);
+            if(preview.style.display != "none") {
+                preview_update();
+            }
         };
-        return a;
+        return span;
     };
     for(var i = 0; i < emojis.length; i++) {
         emojis_div.appendChild(gen_emoji_span(emojis[i]));
