@@ -74,11 +74,11 @@ How to use
 <script>kkoment_load("kkoment-div", "https://my.domain.net", "my-thread-name");</script>
 ``````
 
-*   `kkoment-div`는 **댓글이 들어갈 `div`의 `id`**이고 이는
+*   `kkoment-div`는 댓글이 들어갈 `div`의 `id`이고 이는
     `kkoment_load` 함수의 첫 번째 인자로 넘어간다.
 
-*   `kkoment_load`의 두 번째와 세 번째 인자는 각각 **댓글 쓰레드를
-    메다는 페이지의 도메인 이름**과 **댓글 쓰레드 이름**이다.  댓글
+*   `kkoment_load`의 두 번째와 세 번째 인자는 각각 댓글 쓰레드를
+    메다는 페이지의 도메인 이름과 댓글 쓰레드 이름이다.  댓글
     쓰레드 이름은 사용자 마음대로 정하면 된다.
 
 &#x26A0; `div`의 `id`와 댓글 쓰레드 이름만 다르게 하면 한 페이지에 여러
