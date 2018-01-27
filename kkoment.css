@@ -1,4 +1,4 @@
-.kkoment-textarea {
+.kkoment-text-area {
     width: 100%;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -11,16 +11,16 @@
     font-size: x-large;
 }
 
-.kkoment-table {
+.kkoment-info {
     width: 100%;
 }
 
-.kkoment-date {
+.kkoment-time {
     font-size: small;
     color: gray;
 }
 
-.kkoment-hash {
+.kkoment-hashed {
     font-size: 7px;
     color: gray;
 }
@@ -37,7 +37,7 @@
     background-color: LightGoldenRodYellow;
 }
 
-.kkoment-emojis-div {
+.kkoment-emojis-area {
     width: 100%;
     height: 200px;
     overflow: auto;
