@@ -143,3 +143,9 @@ Thanks to
 내 블로그에 답글을 달아 주며 꿈과 용기를 준
 [woojs](https://blog.woojs.net/) 님, [Bloofer](https://jmyang.kr/)
 님께도 감사를 드립니다.
+
+License
+------
+
+이 프로그램은 퍼블릭 도메인으로 공개됩니다.  `simple_html_dom.php`(MIT
+라이선스)는 제외.
