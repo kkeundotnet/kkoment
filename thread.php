@@ -1,9 +1,7 @@
 <?php
 require_once('access_control.php');
 
-// TODO: return 400 for all php(and json)
 if(!set_access_control($_REQUEST['url'])) {
-    echo "0";
     die();
 }
 

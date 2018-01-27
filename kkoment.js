@@ -250,7 +250,7 @@ function add_last_comments_div(j) {
 function refresh(normal_msg, error_msg) {
     function process_refresh_result(http_request) {
         if (http_request.readyState == 4) {
-            if (http_request.status == 200 && http_request.responseText != "0") {
+            if (http_request.status == 200) {
                 add_last_comments_div(JSON.parse(http_request.responseText));
                 normal_msg('리프레시 되었습니다.');
             } else {
@@ -312,7 +312,7 @@ function add_input_form() {
 
     function process_add_result(http_request, send_button) {
         if (http_request.readyState == 4) {
-            if (http_request.status == 200 && http_request.responseText == "1") {
+            if (http_request.status == 200) {
                 textarea.value = "";
                 if(preview.style.display != "none") {
                     preview.style.display = "none";
@@ -467,7 +467,7 @@ function kkoment_load_in() {
 
     function process_result(http_request) {
         if (http_request.readyState == 4) {
-            if (http_request.status == 200 && http_request.responseText != "0") {
+            if (http_request.status == 200) {
                 render(JSON.parse(http_request.responseText));
             } else {
                 loading_msg.innerText = "loading kkoments error";
@@ -500,7 +500,7 @@ function kkoment_load_n(url, cb=function(n){return n;}) {
 
     function process_result(http_request) {
         if (http_request.readyState == 4) {
-            if (http_request.status == 200 && http_request.responseText != "0") {
+            if (http_request.status == 200) {
                 render(JSON.parse(http_request.responseText));
             } else {
                 alert('Loading kkoment comments number is failed.');

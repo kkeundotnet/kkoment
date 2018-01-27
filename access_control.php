@@ -5,5 +5,6 @@ function set_access_control($url) {
         header("Access-Control-Allow-Origin: ".$url);
         return true;
     }
+    header("HTTP/1.0 404 Not Found");
     return false;
 }

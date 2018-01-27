@@ -3,7 +3,6 @@ require_once('access_control.php');
 require_once('simple_html_dom.php');
 
 if(!set_access_control($_REQUEST['url'])) {
-    echo "0";
     die();
 }
 
@@ -32,12 +31,12 @@ $text = $_REQUEST['text'];
 
 if(empty($url) || empty($thread_id) || empty($name) || empty($time) ||
    empty($pw) || empty($text)) {
-    echo "0";
+    header("HTTP/1.0 404 Not Found");
     die();
 }
 
 if(!is_safe_html($text)) {
-    echo "0";
+    header("HTTP/1.0 404 Not Found");
     die();
 }
 
@@ -54,7 +53,7 @@ $stmt->bindParam(':time', $time);
 $stmt->bindParam(':text', $text);
 $result = $stmt->execute();
 if($result->fetchArray()) {
-    echo "0";
+    header("HTTP/1.0 404 Not Found");
     die();
 }
 
@@ -71,8 +70,7 @@ $stmt->bindParam(':hashed', $hashed);
 $stmt->bindParam(':text', $text);
 $result = $stmt->execute();
 
-if($result) {
-    echo "1";
-} else {
-    echo "0";
+if(!$result) {
+    header("HTTP/1.0 404 Not Found");
+    die();
 }
