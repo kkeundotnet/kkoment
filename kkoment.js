@@ -192,7 +192,11 @@ function kkoment_load(div_id, url, thread_id) {
         var emoji = document.createElement('td');
         emoji.rowSpan = "2";
         emoji.className += " kkoment-emoji";
-        emoji.innerHTML = emoji_of(j.hashed);
+        if (is_preview) {
+            emoji.innerHTML = "&#x263A";;
+        } else {
+            emoji.innerHTML = emoji_of(j.hashed);
+        }
 
         var name = document.createTextNode(j.name);
 
@@ -207,7 +211,11 @@ function kkoment_load(div_id, url, thread_id) {
 
         var hashed = document.createElement('td');
         hashed.className += " kkoment-hashed";
-        hashed.innerText = j.hashed;
+        if (is_preview) {
+            hashed.innerText = "실제 사용될 이모티콘은 서버 측에서 계산됩니다.";
+        } else {
+            hashed.innerText = j.hashed;
+        }
 
         var row1 = document.createElement('tr');
         row1.appendChild(emoji);
@@ -374,7 +382,6 @@ function kkoment_load(div_id, url, thread_id) {
                 name: name_area.value,
                 text: (new showdown.Converter()).makeHtml(text_area.value),
                 time: (new Date()).toUTCString(),
-                hashed: sha256(name_area.value + pw_area.value),
             };
             preview.appendChild(make_comment(j, true));
         };

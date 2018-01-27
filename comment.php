@@ -17,12 +17,21 @@ function is_safe_html($s) {
     return true;
 }
 
+function gen_salt($length = 100) {
+    $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $chars_leng = strlen($chars);
+    $salt = '';
+    for ($i = 0; $i < $length; $i++) {
+        $salt .= $chars[rand(0, $chars_leng - 1)];
+    }
+    return $salt;
+}
+
 $url = $_REQUEST['url'];
 $thread_id = $_REQUEST['thread_id'];
 $name = $_REQUEST['name'];
 $time = $_REQUEST['time'];
 $pw = $_REQUEST['pw'];
-$hashed = hash("sha256", $name.$pw);
 $text = $_REQUEST['text'];
 
 // TODO: check proof-of-work
@@ -39,6 +48,25 @@ if (!is_safe_html($text)) {
 }
 
 $db = new SQLite3(DB_FILE);
+
+// make hashed
+$stmt = $db->prepare('SELECT salt FROM salts WHERE name=:name');
+$stmt->bindParam(':name', $name);
+$result = $stmt->execute();
+if ($row = $result->fetchArray()) {
+    $salt = $row['salt'];
+} else {
+    $salt = gen_salt();
+    $stmt = $db->prepare('INSERT INTO salts (name, salt) VALUES (:name, :salt)');
+    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':salt', $salt);
+    $result = $stmt->execute();
+    if (!$result) {
+        header("HTTP/1.0 404 Not Found");
+        die();
+    }
+}
+$hashed = hash("sha256", $salt.$name.$pw);
 
 // check duplication
 $stmt = $db->prepare(
