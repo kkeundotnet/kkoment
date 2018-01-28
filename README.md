@@ -122,9 +122,14 @@ How to use
 [깃허브](https://github.com/kkeundotnet/kkoment)에 소스코드가 공개되어
 있다.  마음껏 가져가서 써도 좋다.
 
-* `kkoment.js`에서 `kkoment_domain` 값을 새로 설정하고,
-* `_db`와 `_db/kkoment.db`를 `www-data`가 읽고 쓸 수 있도록 파일
-  권한을 설정한다.
+*   `kkoment.js`에서 `kkoment_domain` 값을 새로 설정하고,
+
+*   다음을 실행하여 DB 파일 초기화.
+
+    ``````
+    $ cd _db
+    $ ./init_db
+    ``````
 
 Thanks to
 ------
