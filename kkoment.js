@@ -1,3 +1,5 @@
+const kkoment_domain = 'https://kkoment.kkeun.net';
+
 // It referred to
 // https://stackoverflow.com/questions/11076975/insert-text-into-textarea-at-cursor-position-javascript
 function insert_at_cursor(text_area, s) {
@@ -19,8 +21,6 @@ function insert_at_cursor(text_area, s) {
         text_area.value += s;
     }
 }
-
-const kkoment_domain = 'https://kkoment.kkeun.net';
 
 function make_http_request() {
     if (window.XMLHttpRequest) {

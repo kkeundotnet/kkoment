@@ -65,8 +65,7 @@ How to use
 ``````
 <script src='https://cdn.rawgit.com/jackmoore/autosize/4.0.0/dist/autosize.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js'></script>
-<script src="https://cdn.rawgit.com/kkeundotnet/kkoment/0.2/kkoment.min.js" charset="UTF-8"></script>
+<script src="https://kkoment.kkeun.net/kkoment.min.js" charset="UTF-8"></script>
 ``````
 
 ### 댓글 쓰레드 넣기
@@ -122,7 +121,7 @@ How to use
 [깃허브](https://github.com/kkeundotnet/kkoment)에 소스코드가 공개되어
 있다.  마음껏 가져가서 써도 좋다.
 
-*   `kkoment.js`에서 `kkoment_domain` 값을 새로 설정하고,
+*   `kkoment.js`(또는 `kkoment.min.js`)에서 `kkoment_domain` 값을 새로 설정하고,
 
 *   다음을 실행하여 DB 파일 초기화.
 
