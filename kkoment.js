@@ -506,13 +506,15 @@ function kkoment_load(div_id, url, thread_id) {
     main();
 }
 
-function kkoment_load_n(url, num_cb=function(n) { return n; }) {
-    function render(j) {
-        var nums = document.getElementsByClassName('kkoment-num');
-        for (var i = 0; i < nums.length; i++) {
-            var n = j[nums[i].dataset.kkomentThreadId];
-            if (!n) { n = 0; }
-            nums[i].innerText = num_cb(n);
+function kkoment_load_n(url, num_cb=function(num) { return num["n"]; }) {
+    function render(nums) {
+        var kkoment_nums = document.getElementsByClassName('kkoment-num');
+        for (var i = 0; i < kkoment_nums.length; i++) {
+            var num = nums[kkoment_nums[i].dataset.kkomentThreadId];
+            if (!num) {
+                num = {"n":0, "recent":false};
+            }
+            kkoment_nums[i].innerHTML = num_cb(num);
         }
     }
 

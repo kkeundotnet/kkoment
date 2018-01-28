@@ -10,23 +10,32 @@ $thread_id = $_REQUEST['thread_id'];
 $only_num = $_REQUEST['only_num'];
 
 $db = new SQLite3(DB_FILE);
+$one_week_before = strtotime("-1 week");
 
-function incr_counts($thread_id, &$counts) {
+function is_recent($time) {
+    global $one_week_before;
+    return strtotime($time) > $one_week_before;
+}
+
+function incr_counts($thread_id, $time, &$counts) {
     if (array_key_exists($thread_id, $counts)) {
-        $counts[$thread_id] += 1;
+        $counts[$thread_id]["n"] += 1;
     } else {
-        $counts[$thread_id] = 1;
+        $counts[$thread_id] = array("n" => 1, "recent" => false);
+    }
+    if (is_recent($time)) {
+        $counts[$thread_id]["recent"] = true;
     }
 };
 
 if ($only_num) {
-    $stmt = $db->prepare('SELECT id, thread_id FROM comments WHERE url=:url');
+    $stmt = $db->prepare('SELECT id, thread_id, time FROM comments WHERE url=:url');
     $stmt->bindParam(':url', $url);
     $result = $stmt->execute();
 
     $counts = array();
     while ($row = $result->fetchArray()) {
-        incr_counts($row['thread_id'], $counts);
+        incr_counts($row['thread_id'], $row['time'], $counts);
     }
     echo (json_encode($counts));
 } else {

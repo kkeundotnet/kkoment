@@ -90,7 +90,7 @@ How to use
 ### 쓰레드 별 댓글 개수
 
 다음과 같이 댓글 개수를 서버로부터 읽어올 수 있다.  댓글이 없는
-경우에는 '0'을 출력한다.
+경우에는 "0"을 출력한다.
 
 ``````
 <span class="kkoment-num" data-kkoment-thread-id="hello"></span>
@@ -100,21 +100,27 @@ How to use
 ``````
 
 댓글 개수 표현 형식을 콜백 함수를 통해 사용자가 원하는 대로 변경할 수
-있다.
+있다.  콜백 함수의 인자는 다음 두 필드를 가지는 딕셔너리이다.
+
+`{"n":int, "recent":bool}`  
+`n`: 댓글 개수.  `recent`: 최근 댓글(1주일)이 있는지.
+
+예) 아래와 같은 경우에 최근 댓글이 있으면 "recently replied"를, 댓글이
+하나도 없으면 "no reply"를, 그렇지 않으면 "\[n\]"을 출력한다.
+
 
 ``````
 <span class="kkoment-num" data-kkoment-thread-id="hello"></span>
-<script>kkoment_load_n("https://kkoment.kkeun.net", function(n){
-    if(n) {
-        return n+"개";
+<script>kkoment_load_n("https://kkoment.kkeun.net", function(num){
+    if (num["recent"]) {
+        return "recently replied";
+    } else if(num["n"] == 0) {
+        return "no reply";
     } else {
-        return "없음";
-    }});
+        return "["+num["n"]+"]";
+    }
 </script>
 ``````
-
-위와 같은 경우에 댓글이 없으면 "없음"을, 그렇지 않으면 "n개"를
-출력한다.  참고로 콜백 함수의 인자 `n`은 `int` 타입이다.
 
 ### 직접 설치
 
