@@ -2,7 +2,9 @@
 require_once('config.php');
 require_once('simple_html_dom.php');
 
-if (!set_access_control($_REQUEST['url'])) {
+safe_request_must($url, 'url');
+
+if (!set_access_control($url)) {
     die();
 }
 
@@ -27,12 +29,11 @@ function gen_salt($length = 100) {
     return $salt;
 }
 
-$url = $_REQUEST['url'];
-$thread_id = $_REQUEST['thread_id'];
-$name = $_REQUEST['name'];
-$time = $_REQUEST['time'];
-$pw = $_REQUEST['pw'];
-$text = $_REQUEST['text'];
+safe_request_must($thread_id, 'thread_id');
+safe_request_must($name, 'name');
+safe_request_must($time, 'time');
+safe_request_must($pw, 'pw');
+safe_request_must($text, 'text');
 
 // TODO: check proof-of-work
 

@@ -1,13 +1,11 @@
 <?php
 require_once('config.php');
 
-if (!set_access_control($_REQUEST['url'])) {
+safe_request_must($url, 'url');
+
+if (!set_access_control($url)) {
     die();
 }
-
-$url = $_REQUEST['url'];
-$thread_id = $_REQUEST['thread_id'];
-$only_num = $_REQUEST['only_num'];
 
 $db = new SQLite3(DB_FILE);
 $one_week_before = strtotime("-1 week");
@@ -28,6 +26,7 @@ function incr_counts($thread_id, $time, &$counts) {
     }
 };
 
+safe_request($only_num, 'only_num');
 if ($only_num) {
     $stmt = $db->prepare('SELECT id, thread_id, time FROM comments WHERE url=:url');
     $stmt->bindParam(':url', $url);
@@ -39,6 +38,7 @@ if ($only_num) {
     }
     echo (json_encode($counts));
 } else {
+    safe_request_must($thread_id, 'thread_id');
     $removed_msg = "<p style=\"color:red;\">관리자에 의해 삭제된 메세지입니다.</p>";
     $stmt = $db->prepare(
         'SELECT id, name, time, hashed, text, removed FROM comments
