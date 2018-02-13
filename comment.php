@@ -10,7 +10,7 @@ if (!set_access_control($url)) {
 
 function is_safe_html($s) {
     $html = str_get_html($s);
-    $block_tags = array('script', 'iframe', 'frame', 'img');
+    $block_tags = array('script', 'iframe', 'frame');
     foreach ($block_tags as $block_tag) {
         if (count($html->find($block_tag)) != 0) {
             return false;
