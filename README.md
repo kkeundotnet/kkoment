@@ -63,7 +63,7 @@ How to use
 기본적으로 읽어 와야 하는 자바스크립트는 다음과 같다.
 
 ``````
-<script src='https://cdn.rawgit.com/jackmoore/autosize/4.0.1/dist/autosize.min.js'></script>
+<script src='https://cdn.rawgit.com/jackmoore/autosize/4.0.2/dist/autosize.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js'></script>
 <script src="https://kkoment.kkeun.net/kkoment.min.js" charset="UTF-8"></script>
 ``````
