@@ -171,7 +171,7 @@ function kkoment_load(div_id, url, thread_id) {
         var html = document.createElement('html');
         html.innerHTML = (new showdown.Converter()).makeHtml(md);
 
-        var block_tags = ['script', 'iframe', 'frame'];
+        var block_tags = ['script', 'iframe', 'frame', 'img'];
         for (var i = 0; i < block_tags.length; i++) {
             var block_tag = block_tags[i];
             if (html.getElementsByTagName(block_tag).length != 0) {
@@ -467,7 +467,7 @@ function kkoment_load(div_id, url, thread_id) {
         notice.innerHTML =
             "&#x26A0; 댓글은 "
             + "<a href=\"https://daringfireball.net/projects/markdown/syntax\">"
-            + "마크다운 문법</a>으로 쓰되, 프레임, 스크립트는 보안을 "
+            + "마크다운 문법</a>으로 쓰되, 그림, 프레임, 스크립트는 보안을 "
             + "위해 사용할 수 없습니다.";
         div.appendChild(notice);
     }
