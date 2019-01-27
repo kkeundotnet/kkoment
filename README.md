@@ -1,3 +1,5 @@
+**DEPRECATED: 더 이상 유지보수를 하지 않는다.**
+
 [끈닷넷](https://kkeun.net/) 꼬멘트 <sup>베타</sup>
 ======
 
