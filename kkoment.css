@@ -17,12 +17,21 @@
 
 .kkoment-time {
     font-size: small;
-    color: gray;
+    color: lightgray;
 }
 
-.kkoment-hashed {
+.dark-mode .kkoment-time {
+    color: #282a36;
+}
+
+.kkoment-name-hash {
     font-size: 7px;
-    color: gray;
+    color: lightgray;
+    word-break: break-all;
+}
+
+.dark-mode .kkoment-name-hash {
+    color: #282a36;
 }
 
 .kkoment-text {
@@ -30,11 +39,18 @@
 }
 
 .kkoment-hr {
-    border: 0.5px dashed green;
+    border-width: 0.5px;
+    border-style: dashed;
+    border-color: green;
 }
 
 .kkoment-preview {
     background-color: LightGoldenRodYellow;
+}
+
+/* This color was randomly selected. */
+.dark-mode .kkoment-preview {
+    background-color: #101000;
 }
 
 .kkoment-emojis-area {
@@ -42,5 +58,23 @@
     height: 200px;
     overflow: auto;
     font-size: x-large;
-    border: 1px solid gray;
+    border-width: 1px;
+    border-style: solid;
+    border-color: lightgray;
+}
+
+.dark-mode .kkoment-emojis-area {
+    border-color: #282a36;
+}
+
+.kkoment-button {
+    min-height: 30px;
+}
+
+.kkoment-alert {
+    color: red;
+}
+
+.dark-mode .kkoment-alert {
+    color: #ff5555;
 }
