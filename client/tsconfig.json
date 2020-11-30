@@ -1,0 +1,12 @@
+{
+    "extends": "../base.tsconfig",
+
+    "compilerOptions": {
+        "outFile": "kkoment.js",
+    },
+
+    "files": [
+        "../common.ts",
+        "kkoment.ts",
+    ]
+}

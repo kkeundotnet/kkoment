@@ -1,0 +1,6 @@
+{
+    "require": {
+        "kkeundotnet/kkrouter": "^0.0.1",
+        "kkeundotnet/kkrss": "^0.0.1"
+    }
+}
