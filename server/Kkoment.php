@@ -15,7 +15,7 @@ class Kkoment
     {
         $this->domain_id = $domain_id;
         $this->thread_id = $thread_id;
-        $this->one_week_before = strtotime("-1 week");
+        $this->one_week_before = strtotime('-1 week');
     }
 
     public function load() : void
@@ -30,7 +30,7 @@ class Kkoment
         $stmt->bindParam(':thread_id', $this->thread_id);
         $result = $stmt->execute();
 
-        $removed_msg = "<p class=\"kkoment-alert\">관리자에 의해 삭제된 메세지입니다.</p>";
+        $removed_msg = '<p class="kkoment-alert">관리자에 의해 삭제된 메세지입니다.</p>';
         $all = [];
         while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
             if ($row['removed']) {
@@ -45,12 +45,12 @@ class Kkoment
     private static function incr_counts(string $thread_id, string $time, array &$counts) : void
     {
         if (array_key_exists($thread_id, $counts)) {
-            $counts[$thread_id]["n"] += 1;
+            $counts[$thread_id]['n'] += 1;
         } else {
-            $counts[$thread_id] = ["n" => 1, "recent" => false];
+            $counts[$thread_id] = ['n' => 1, 'recent' => false];
         }
         if (KkomentUtil::is_recent($time)) {
-            $counts[$thread_id]["recent"] = true;
+            $counts[$thread_id]['recent'] = true;
         }
     }
 
@@ -111,7 +111,7 @@ class Kkoment
         $db = new SQLite3($kkoment_config->db_path);
 
         $salt = $this->get_salt($db, $name);
-        $name_hash = hash("sha256", $salt.$name.$pw);
+        $name_hash = hash('sha256', $salt.$name.$pw);
 
         // check duplication
         $stmt = $db->prepare(<<<'SQL'
