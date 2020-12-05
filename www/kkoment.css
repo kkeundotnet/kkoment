@@ -1,0 +1,80 @@
+.kkoment-text-area {
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.kkoment-emoji {
+    width: 35px;
+    text-align: center;
+    font-size: x-large;
+}
+
+.kkoment-info {
+    width: 100%;
+}
+
+.kkoment-time {
+    font-size: small;
+    color: lightgray;
+}
+
+.dark-mode .kkoment-time {
+    color: #282a36;
+}
+
+.kkoment-name-hash {
+    font-size: 7px;
+    color: lightgray;
+    word-break: break-all;
+}
+
+.dark-mode .kkoment-name-hash {
+    color: #282a36;
+}
+
+.kkoment-text {
+    padding: 0px 0px 0px 40px;
+}
+
+.kkoment-hr {
+    border-width: 0.5px;
+    border-style: dashed;
+    border-color: green;
+}
+
+.kkoment-preview {
+    background-color: LightGoldenRodYellow;
+}
+
+/* This color is randomly selected. */
+.dark-mode .kkoment-preview {
+    background-color: #101000;
+}
+
+.kkoment-emojis-area {
+    width: 100%;
+    height: 200px;
+    overflow: auto;
+    font-size: x-large;
+    border-width: 1px;
+    border-style: solid;
+    border-color: lightgray;
+}
+
+.dark-mode .kkoment-emojis-area {
+    border-color: #282a36;
+}
+
+.kkoment-button {
+    min-height: 30px;
+}
+
+.kkoment-alert {
+    color: red;
+}
+
+.dark-mode .kkoment-alert {
+    color: #ff5555;
+}
