@@ -1,12 +1,22 @@
 {
-    "extends": "../base.tsconfig",
-
     "compilerOptions": {
-        "outFile": "kkoment.js",
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "strict": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "lib": [
+            "dom",
+            "es2018",
+        ],
+        "outFile": "kkoment.js"
     },
-
     "files": [
-        "../common.ts",
+        "url.ts",
         "kkoment.ts",
     ]
 }

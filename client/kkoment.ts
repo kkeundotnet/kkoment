@@ -1,8 +1,66 @@
-const kkoment = (function() {
-    const url = 'https://kkoment.kkeun.net';
+declare function autosize(text_area: HTMLTextAreaElement): void;
 
-    // NOTE: Run `src/kkoment$ ./upgrade` to upgrade version
-    const version = '1.0.7';
+declare namespace autosize {
+    function update(text_area: HTMLTextAreaElement): void;
+}
+
+declare namespace kkmarkdown {
+    function trans(s: string): string;
+}
+
+type kkoment_num = {
+    "n": number,
+    "recent": boolean,
+}
+
+const kkoment = (function() {
+    function get_http_request({
+        succeeded,
+        failed,
+        waiting,
+    }: {
+        succeeded: (response_text: string) => void,
+        failed: () => void,
+        waiting: () => void,
+    }): XMLHttpRequest {
+        const http_request = new XMLHttpRequest();
+        http_request.onreadystatechange = function(): void {
+            if (http_request.readyState == 4) {
+                if (http_request.status == 200) {
+                    succeeded(http_request.responseText);
+                } else {
+                    failed();
+                }
+            } else {
+                waiting();
+            }
+        };
+        return http_request;
+    }
+
+    // https://stackoverflow.com/questions/11076975/insert-text-into-textarea-at-cursor-position-javascript
+    function insert_at_cursor(text_area: HTMLTextAreaElement, s: string): void {
+        if ((document as any).selection) {
+            // IE support
+            text_area.focus();
+            const sel = (document as any).selection.createRange();
+            sel.text = s;
+        } else if (text_area.selectionStart || text_area.selectionStart == 0) {
+            // MOZILLA and others
+            const startPos = text_area.selectionStart;
+            const endPos = text_area.selectionEnd;
+            text_area.value = text_area.value.substring(0, startPos)
+                + s
+                + text_area.value.substring(endPos, text_area.value.length);
+            const cursorPos = startPos + s.length;
+            text_area.selectionStart = cursorPos;
+            text_area.selectionEnd = cursorPos;
+        } else {
+            text_area.value += s;
+        }
+    }
+
+    function id(): void { }
 
     function get_emojis(ranges: { start: string, end: string }[]): string[] {
         const emojis: string[] = [];
@@ -36,7 +94,7 @@ const kkoment = (function() {
 
         let last_id = -1;
 
-        const thread_php = `${url}?domain_id=${encodeURI(domain_id)}&thread_id=${encodeURI(thread_id)}`;
+        const thread_php = `${kkoment_url}?domain_id=${encodeURI(domain_id)}&thread_id=${encodeURI(thread_id)}`;
 
         const characters = get_emojis([
             { start: '1f32d', end: '1f335' },
@@ -221,7 +279,7 @@ const kkoment = (function() {
             normal_msg: (msg: string) => void,
             error_msg: (msg: string) => void,
         ): void {
-            const http_request = kkcommon.get_http_request({
+            const http_request = get_http_request({
                 succeeded: function(response_text: string): void {
                     add_last_comments(parse_comments(response_text));
                     normal_msg('리프레시됐습니다.');
@@ -282,8 +340,8 @@ const kkoment = (function() {
             preview_button.innerHTML = '미리보기';
             preview_button.classList.add('kkoment-button');
 
-            function get_http_request(send_button: HTMLButtonElement): XMLHttpRequest {
-                return kkcommon.get_http_request({
+            function get_http_request_(send_button: HTMLButtonElement): XMLHttpRequest {
+                return get_http_request({
                     succeeded: function(_response_text: string): void {
                         text_area.value = '';
                         if (preview.style.display != 'none') {
@@ -334,8 +392,8 @@ const kkoment = (function() {
                 params.append('pw', pw);
                 params.append('text', text);
 
-                const comment_php = url;
-                const http_request = get_http_request(send_button);
+                const comment_php = kkoment_url;
+                const http_request = get_http_request_(send_button);
                 http_request.open('POST', comment_php);
                 http_request.send(params);
             };
@@ -375,28 +433,6 @@ const kkoment = (function() {
             buttons.appendChild(send_button);
             buttons.appendChild(make_space());
             buttons.appendChild(msg_console);
-
-            // https://stackoverflow.com/questions/11076975/insert-text-into-textarea-at-cursor-position-javascript
-            function insert_at_cursor(text_area: HTMLTextAreaElement, s: string): void {
-                if ((document as any).selection) {
-                    // IE support
-                    text_area.focus();
-                    const sel = (document as any).selection.createRange();
-                    sel.text = s;
-                } else if (text_area.selectionStart || text_area.selectionStart == 0) {
-                    // MOZILLA and others
-                    const startPos = text_area.selectionStart;
-                    const endPos = text_area.selectionEnd;
-                    text_area.value = text_area.value.substring(0, startPos)
-                        + s
-                        + text_area.value.substring(endPos, text_area.value.length);
-                    const cursorPos = startPos + s.length;
-                    text_area.selectionStart = cursorPos;
-                    text_area.selectionEnd = cursorPos;
-                } else {
-                    text_area.value += s;
-                }
-            }
 
             function make_emoji_button(emoji: string): HTMLSpanElement {
                 const button = document.createElement('span');
@@ -444,7 +480,7 @@ const kkoment = (function() {
                 link.id = css_id;
                 link.rel = 'stylesheet';
                 link.type = 'text/css';
-                link.href = `${url}/${version}/kkoment.css`;
+                link.href = `${kkoment_url}/kkoment.css`;
                 head.appendChild(link);
             }
         }
@@ -469,7 +505,7 @@ const kkoment = (function() {
         }
 
         load_css();
-        const http_request = kkcommon.get_http_request({
+        const http_request = get_http_request({
             succeeded: function(response_text: string): void {
                 initial_render(parse_comments(response_text));
             },
@@ -489,7 +525,7 @@ const kkoment = (function() {
         num_cb: (num: kkoment_num) => string = function(num: kkoment_num): string {
             return num["n"].toString();
         },
-        full_cb: () => void = kkcommon.id,
+        full_cb: () => void = id,
     ): void {
         function render(nums: { [key: string]: kkoment_num | undefined; }) {
             const kkoment_nums = document.getElementsByClassName('kkoment-num');
@@ -505,14 +541,14 @@ const kkoment = (function() {
             }
         }
 
-        const thread_php = `${url}?domain_id=${encodeURI(domain_id)}&only_num=1`;
-        const http_request = kkcommon.get_http_request({
+        const thread_php = `${kkoment_url}?domain_id=${encodeURI(domain_id)}&only_num=1`;
+        const http_request = get_http_request({
             succeeded: function(response_text: string): void {
                 render(JSON.parse(response_text));
                 full_cb();
             },
-            failed: kkcommon.id,
-            waiting: kkcommon.id,
+            failed: id,
+            waiting: id,
         });
         http_request.open('GET', thread_php);
         http_request.send();
