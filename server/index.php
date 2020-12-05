@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Kkeundotnet\Kkoment;
 
-require_once(__DIR__.'/KkAutoload.php');
+require_once(__DIR__.'/KkomentAutoload.php');
 
 use Kkeundotnet\Kkrouter\KkRouter;
 use Kkeundotnet\Kkrouter\KkString as KkRouterString;

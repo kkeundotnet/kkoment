@@ -1,21 +1,23 @@
 <?php
 declare(strict_types=1);
 
+namespace Kkeundotnet\Kkoment;
+
+require_once(__DIR__.'/KkomentAutoload.php');
+
 use Kkeundotnet\Kkrss\KkItem as KkRssItem;
 use Kkeundotnet\Kkrss\KkViewer as KkRssViewer;
 
-namespace Kkeundotnet\Kkoment;
-
-class RssViewer extends KkRssViewer
+class KkomentRssViewer extends KkRssViewer
 {
     private string $domain_id;
 
     public function __construct($domain_id)
     {
         $this->domain_id = $domain_id;
-        $this->title = '꼬멘트 - '.$domain_id;
+        $this->title = "꼬멘트 - {$domain_id}";
         $this->link = "https://{$domain_id}/";
-        $this->description = $this->title.'의 지난 주 댓글';
+        $this->description = "{$this->title}의 지난 주 댓글";
         $this->is_perma_link_guid = false;
         $this->init_items();
     }
@@ -38,7 +40,7 @@ class RssViewer extends KkRssViewer
 
     private function init_items() : void
     {
-        $db = new SQLite3(Util::DB_FILE);
+        $db = new \SQLite3(Util::DB_FILE);
         $stmt = $db->prepare(<<<'SQL'
             SELECT id, name, text, thread_id, time
             FROM comments

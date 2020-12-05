@@ -20,7 +20,7 @@ class Kkoment
 
     public function load() : void
     {
-        $db = new SQLite3($kkoment_config->db_path);
+        $db = new \SQLite3($kkoment_config->db_path);
         $stmt = $db->prepare(<<<'SQL'
             SELECT id, name, name_hash, text, time, removed
             FROM comments
@@ -56,7 +56,7 @@ class Kkoment
 
     public function load_num() : void
     {
-        $db = new SQLite3($kkoment_config->db_path);
+        $db = new \SQLite3($kkoment_config->db_path);
         $stmt = $db->prepare(<<<'SQL'
             SELECT id, thread_id, time
             FROM comments
@@ -83,7 +83,7 @@ class Kkoment
         return $salt;
     }
 
-    private function get_salt(SQLite3 $db, string $name) : string
+    private function get_salt(\SQLite3 $db, string $name) : string
     {
         $stmt = $db->prepare('SELECT salt FROM salts WHERE name = :name');
         $stmt->bindParam(':name', $name);
@@ -108,7 +108,7 @@ class Kkoment
         $text = (new Kkmarkdown)->transform($text);
         $time = date(DATE_ATOM, time());
 
-        $db = new SQLite3($kkoment_config->db_path);
+        $db = new \SQLite3($kkoment_config->db_path);
 
         $salt = $this->get_salt($db, $name);
         $name_hash = hash('sha256', $salt.$name.$pw);
