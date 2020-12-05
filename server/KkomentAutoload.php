@@ -8,6 +8,10 @@ require_once(__DIR__.'/KkomentUtil.php');
 require_once($kkoment_config->vendor_autoload_path);
 
 spl_autoload_register(function (string $class_name) : void {
+        if ($class_name == 'Kkeundotnet\Kkmarkdown\Kkmarkdown') {
+            require_once($kkoment_config->kkmarkdown_php_path);
+        }
+
         if (KkomentUtil::is_prefix($class_name, __NAMESPACE__.'\\')) {
             $class_name = substr($class_name, strlen(__NAMESPACE__.'\\'));
             require_once(__DIR__."/{$class_name}.php");

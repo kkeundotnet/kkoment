@@ -5,6 +5,8 @@ namespace Kkeundotnet\Kkoment;
 
 require_once(__DIR__.'/KkomentAutoload.php');
 
+use Kkeundotnet\Kkmarkdown\Kkmarkdown as Kkmarkdown;
+
 class Kkoment
 {
     private string $domain_id;
@@ -105,7 +107,7 @@ class Kkoment
 
     public function add(string $name, string $pw, string $text) : void
     {
-        $text = (new Kkmarkdown)->transform($text);
+        $text = (new Kkmarkdown($kkoment_config->kkmarkdown_bin_path))->transform($text);
         $time = date(DATE_ATOM, time());
 
         $db = new \SQLite3($kkoment_config->db_path);
