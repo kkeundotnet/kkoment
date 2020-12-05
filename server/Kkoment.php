@@ -22,6 +22,7 @@ class Kkoment
 
     public function load() : void
     {
+        global $kkoment_config;
         $db = new \SQLite3($kkoment_config->db_path);
         $stmt = $db->prepare(<<<'SQL'
             SELECT id, name, name_hash, text, time, removed
@@ -58,6 +59,7 @@ class Kkoment
 
     public function load_num() : void
     {
+        global $kkoment_config;
         $db = new \SQLite3($kkoment_config->db_path);
         $stmt = $db->prepare(<<<'SQL'
             SELECT id, thread_id, time
@@ -107,6 +109,7 @@ class Kkoment
 
     public function add(string $name, string $pw, string $text) : void
     {
+        global $kkoment_config;
         $text = (new Kkmarkdown($kkoment_config->kkmarkdown_bin_path))->transform($text);
         $time = date(DATE_ATOM, time());
 
