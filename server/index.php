@@ -12,7 +12,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
 case 'GET':
     $router = new KkRouter(function () {
-        KkomentUtil::die404('Routing failed');
+        KkomentUtil::die404('Failed to route');
     });
 
     $router->add(

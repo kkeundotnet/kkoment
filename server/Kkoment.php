@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Kkeundotnet\Kkoment;
 
+require_once(__DIR__.'/KkomentAutoload.php');
+
 class Kkoment
 {
     private string $domain_id;
@@ -18,7 +20,7 @@ class Kkoment
 
     public function load() : void
     {
-        $db = new SQLite3(KkomentUtil::DB_FILE);
+        $db = new SQLite3($kkoment_config->db_path);
         $stmt = $db->prepare(<<<'SQL'
             SELECT id, name, name_hash, text, time, removed
             FROM comments
@@ -54,7 +56,7 @@ class Kkoment
 
     public function load_num() : void
     {
-        $db = new SQLite3(KkomentUtil::DB_FILE);
+        $db = new SQLite3($kkoment_config->db_path);
         $stmt = $db->prepare(<<<'SQL'
             SELECT id, thread_id, time
             FROM comments
@@ -95,7 +97,7 @@ class Kkoment
             $stmt->bindParam(':salt', $salt);
             $result = $stmt->execute();
             if (!$result) {
-                (new Kkoment404Viewer)->view();
+                KkomentUtil::die404('Failed to get salt');
             }
         }
         return $salt;
@@ -106,7 +108,7 @@ class Kkoment
         $text = (new Kkmarkdown)->transform($text);
         $time = date(DATE_ATOM, time());
 
-        $db = new SQLite3(KkomentUtil::DB_FILE);
+        $db = new SQLite3($kkoment_config->db_path);
 
         $salt = $this->get_salt($db, $name);
         $name_hash = hash("sha256", $salt.$name.$pw);
@@ -125,7 +127,7 @@ class Kkoment
         $stmt->bindParam(':time', $time);
         $result = $stmt->execute();
         if ($result->fetchArray(SQLITE3_ASSOC)) {
-            (new Kkoment404Viewer)->view();
+            KkomentUtil::die404('Failed to check comment duplication');
         }
         
         // insert data
@@ -143,7 +145,7 @@ class Kkoment
         $stmt->bindParam(':removed', $removed);
         $result = $stmt->execute();
         if (!$result) {
-            (new Kkoment404Viewer)->view();
+            KkomentUtil::die404('Failed to insert comment');
         }
     }
 }
