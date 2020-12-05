@@ -1,2 +1,5 @@
 /_db/*.sqlite3
+/client/kkoment.js
+/client/url.ts
+/kkoment.json
 /vendor
