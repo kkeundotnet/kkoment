@@ -3,13 +3,62 @@ declare(strict_types=1);
 
 namespace Kkeundotnet\Kkoment;
 
+require_once(__DIR__.'/Kkoment404.php');
+
 class KkomentUtil
 {
-    // TODO read db file path from kkoment.json
-    const DB_FILE = __DIR__.'/../kkoment_db/kkoment.sqlite3';
+    public static function assert_file_exists(string $path) : void {
+        if (!file_exists($path)) {
+            Kkoment404::die("File not found: {$path}");
+        }
+    }
+
+    public static function file_get_contents_exn(string $path) : string {
+        self::assert_file_exists($path);
+        return file_get_contents($path);
+    }
+
+    private static function get_field_common(array $arr, string $key, callable $callback) {
+        if (!array_key_exists($key, $arr)) {
+            return $callback();
+        }
+        return $arr[$key];
+    }
+
+    public static function get_field_nullable(array $arr, string $key) {
+        return self::get_field_common($arr, $key, function() {
+            return null;
+        });
+    }
+
+    public static function get_field_exn(array $arr, string $key, $default=null) {
+        return self::get_field_common($arr, $key, function() use ($default, $key) {
+            if (is_null($default)) {
+                Kkoment404::die("Field not found: {$key}");
+            }
+            return $default;
+        });
+    }
+
+    public static function is_prefix(string $s, string $prefix) : bool {
+        $prefix_len = strlen($prefix);
+        return strlen($s) >= $prefix_len && substr($s, 0, $prefix_len) == $prefix;
+    }
 
     public static function is_recent(string $time) : bool
     {
         return strtotime('-1 week') <= strtotime($time);
+    }
+
+    public static function is_url(string $s) : bool {
+        return self::is_prefix($s, 'http://') || self::is_prefix($s, 'https://');
+    }
+
+    public static function make_absolute_path(string $base, string $path) : string {
+        if (strlen($path) >= 1 && $path[0] == '/') {
+            return $path;
+        } else {
+            return "{$base}/{$path}";
+        }
     }
 }
