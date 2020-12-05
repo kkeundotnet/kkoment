@@ -133,7 +133,7 @@ kkoment.load_n("kkoment.kkeun.net", function(num){
     } else if(num["n"] == 0) {
         return "no reply";
     } else {
-        return "["+num["n"]+"]";
+        return `[${num["n"]}]`;
     }
 });
 ```
