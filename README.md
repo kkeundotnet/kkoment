@@ -4,7 +4,7 @@
 Disqus에서 [내 글이 자꾸 스팸 처리](https://blog.kkeun.net/computer/2018-01-24-spam-of-disqus) 되어
 답답해서 울면서 만든 댓글 시스템.
 
-![대화](/example.png) {}
+![대화](/example.png)
 
 특징
 ------
@@ -62,7 +62,7 @@ Disqus에서 [내 글이 자꾸 스팸 처리](https://blog.kkeun.net/computer/2
 
 ### HTML 헤더에서 자바스크립트를 읽어 오고,
 
-``` {.html}
+```html
 <script src="https://cdn.rawgit.com/jackmoore/autosize/4.0.2/dist/autosize.min.js"></script>
 <script src="https://kkeun.net/kkmarkdown.js"></script>
 <script src="https://kkoment.kkeun.net/kkoment.js"></script>
@@ -70,12 +70,12 @@ Disqus에서 [내 글이 자꾸 스팸 처리](https://blog.kkeun.net/computer/2
 
 ### HTML 바디에서 꼬멘트를 읽어 오면 끝.
 
-``` {.html}
+```html
 <div id="kkoment-div"></div>
 <script>kkoment.load("kkoment-div", "my.domain.id", "my-thread-id");</script>
 ```
 
-``` {.typescript}
+```typescript
 kkoment.load(
     div_id: string,
     domain_id: string,
@@ -94,14 +94,14 @@ kkoment.load(
 
 ### 댓글 개수를 읽어 올 수도 있고,
 
-``` {.html}
+```html
 <span class="kkoment-num" data-kkoment-thread-id="hello"></span>
 <span class="kkoment-num" data-kkoment-thread-id="bye"></span>
 ...
 <script>kkoment.load_n("kkoment.kkeun.net")</script>
 ```
 
-``` {.typescript}
+```typescript
 kkoment.load_n: (
     domain_id: string,
     num_cb?: (num: { "n": number, "recent": boolean }) => string,
@@ -126,7 +126,7 @@ kkoment.load_n: (
 예) 최근 댓글이 있으면 "recently replied"를, 댓글이 없으면 "no reply"를, 그렇지 않으면 "\[n\]"을
 출력
 
-``` {.javascript}
+```javascript
 kkoment.load_n("kkoment.kkeun.net", function(num){
     if (num["recent"]) {
         return "recently replied";
