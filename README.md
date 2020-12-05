@@ -12,7 +12,7 @@ Disqus에서
 Screenshot
 ------
 
-![대화](img/kkoment1.png)
+![대화](example.png)
 
 Features
 ------
