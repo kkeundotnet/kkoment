@@ -58,7 +58,9 @@ Disqus에서 [내 글이 자꾸 스팸 처리](https://blog.kkeun.net/computer/2
 사용법
 ------
 
-직접 설치해서 사용할 분은 [INSTALL.md](INSTALL.md) 참고.
+자신의 서버에 직접 설치해서 사용할 분은 [INSTALL.md](INSTALL.md) 참고.
+
+### HTML 헤더에서 자바스크립트를 읽어 오고,
 
 ``` {.html}
 <script src="https://cdn.rawgit.com/jackmoore/autosize/4.0.2/dist/autosize.min.js"></script>
@@ -66,7 +68,7 @@ Disqus에서 [내 글이 자꾸 스팸 처리](https://blog.kkeun.net/computer/2
 <script src="https://kkoment.kkeun.net/kkoment.js"></script>
 ```
 
-### 댓글 넣기
+### HTML 바디에서 꼬멘트를 읽어 오면 끝.
 
 ``` {.html}
 <div id="kkoment-div"></div>
@@ -90,7 +92,7 @@ kkoment.load(
 *   `thread_id`: 쓰레드 이름.  페이지 별로 구분되도록 사용자 마음대로 정하면 됨.  (단, RSS 이용자는
     아래를 참고)
 
-### 댓글 개수 넣기
+### 댓글 개수를 읽어 올 수도 있고,
 
 ``` {.html}
 <span class="kkoment-num" data-kkoment-thread-id="hello"></span>
@@ -136,7 +138,7 @@ kkoment.load_n("kkoment.kkeun.net", function(num){
 });
 ```
 
-### RSS 사용
+### RSS를 읽어 올 수도 있음.
 
 ```
 https://kkoment.kkeun.net/feed.xml?domain_id=<domain_id>
