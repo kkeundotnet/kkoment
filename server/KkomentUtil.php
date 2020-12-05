@@ -3,14 +3,20 @@ declare(strict_types=1);
 
 namespace Kkeundotnet\Kkoment;
 
-require_once(__DIR__.'/Kkoment404.php');
-
 class KkomentUtil
 {
     public static function assert_file_exists(string $path) : void {
         if (!file_exists($path)) {
-            Kkoment404::die("File not found: {$path}");
+            self::die404("File not found: {$path}");
         }
+    }
+
+    public static function die404(string $log) : void
+    {
+        error_log($log);
+        http_response_code(404);
+        echo('<h1>404 Not Found</h1>');
+        die();
     }
 
     public static function file_get_contents_exn(string $path) : string {
@@ -34,7 +40,7 @@ class KkomentUtil
     public static function get_field_exn(array $arr, string $key, $default=null) {
         return self::get_field_common($arr, $key, function() use ($default, $key) {
             if (is_null($default)) {
-                Kkoment404::die("Field not found: {$key}");
+                self::die404("Field not found: {$key}");
             }
             return $default;
         });

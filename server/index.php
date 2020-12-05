@@ -12,7 +12,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
 case 'GET':
     $router = new KkRouter(function () {
-        Kkoment404::die('Routing failed');
+        KkomentUtil::die404('Routing failed');
     });
 
     $router->add(
@@ -28,7 +28,7 @@ case 'GET':
                 header('Access-Control-Allow-Origin: *');
                 (new Kkoment($domain_id, null))->load_num();
             } else {
-                Kkoment404::die('Either thread_id or only_num should be given');
+                KkomentUtil::die404('Either thread_id or only_num should be given');
             }
         }
     );
@@ -57,6 +57,6 @@ case 'POST':
     break;
 
 default:
-    Kkoment404::die("Unknown request method: {$_SERVER['REQUEST_METHOD']}");
+    KkomentUtil::die404("Unknown request method: {$_SERVER['REQUEST_METHOD']}");
     break;
 }
