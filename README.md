@@ -131,11 +131,10 @@ How to use
 
 *   `kkoment.js`(또는 `kkoment.min.js`)에서 `kkoment_domain` 값을 새로 설정하고,
 
-*   다음을 실행하여 DB 파일 초기화.
+*   다음을 실행하여 DB 파일 및 디렉토리 초기화.
 
     ``````
-    $ cd _db
-    $ ./init_db
+    $ scripts/init_db
     ``````
 
 Thanks to

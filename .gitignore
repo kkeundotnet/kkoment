@@ -1,2 +1,2 @@
-/_db/kkoment.db
+/_db/*.sqlite3
 /vendor
