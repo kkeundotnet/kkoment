@@ -5,7 +5,8 @@ namespace Kkeundotnet\Kkoment;
 
 class KkomentUtil
 {
-    public static function assert_file_exists(string $path) : void {
+    public static function assert_file_exists(string $path) : void
+    {
         if (!file_exists($path)) {
             self::die404("File not found: {$path}");
         }
@@ -19,26 +20,30 @@ class KkomentUtil
         die();
     }
 
-    public static function file_get_contents_exn(string $path) : string {
+    public static function file_get_contents_exn(string $path) : string
+    {
         self::assert_file_exists($path);
         return file_get_contents($path);
     }
 
-    private static function get_field_common(array $arr, string $key, callable $callback) {
+    private static function get_field_common(array $arr, string $key, callable $callback)
+    {
         if (!array_key_exists($key, $arr)) {
             return $callback();
         }
         return $arr[$key];
     }
 
-    public static function get_field_nullable(array $arr, string $key) {
-        return self::get_field_common($arr, $key, function() {
+    public static function get_field_nullable(array $arr, string $key)
+    {
+        return self::get_field_common($arr, $key, function () {
             return null;
         });
     }
 
-    public static function get_field_exn(array $arr, string $key, $default=null) {
-        return self::get_field_common($arr, $key, function() use ($default, $key) {
+    public static function get_field_exn(array $arr, string $key, $default=null)
+    {
+        return self::get_field_common($arr, $key, function () use ($default, $key) {
             if (is_null($default)) {
                 self::die404("Field not found: {$key}");
             }
@@ -46,7 +51,8 @@ class KkomentUtil
         });
     }
 
-    public static function is_prefix(string $s, string $prefix) : bool {
+    public static function is_prefix(string $s, string $prefix) : bool
+    {
         $prefix_len = strlen($prefix);
         return strlen($s) >= $prefix_len && substr($s, 0, $prefix_len) == $prefix;
     }
@@ -56,11 +62,13 @@ class KkomentUtil
         return strtotime('-1 week') <= strtotime($time);
     }
 
-    public static function is_url(string $s) : bool {
+    public static function is_url(string $s) : bool
+    {
         return self::is_prefix($s, 'http://') || self::is_prefix($s, 'https://');
     }
 
-    public static function make_absolute_path(string $base, string $path) : string {
+    public static function make_absolute_path(string $base, string $path) : string
+    {
         if (strlen($path) >= 1 && $path[0] == '/') {
             return $path;
         } else {
