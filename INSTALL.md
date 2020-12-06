@@ -1,4 +1,4 @@
-직접 설치 방법
+꼬멘트 직접 설치 방법
 ===
 
 ## PHP
@@ -16,15 +16,17 @@ $ sudo apt-get install php7.4 php7.4-cli php7.4-common php7.4-fpm php7.4-json ph
 
 https://www.typescriptlang.org/download
 
-## Dependencies
+## PHP 외부 라이브러리 설치
 
 ```
 $ composer install
 ```
 
-`vendor`에 필요한 PHP 라이브러리들이 설치된다.
+`vendor` 디렉토리가 생성된다. (composer가 없으신 분들은 여기로 https://getcomposer.org/)
 
-그리고 [ㄲ마크다운](https://github.com/kkeundotnet/kkmarkdown)도 어딘가에 설치한다.
+## ㄲ마크다운 설치
+
+[ㄲ마크다운](https://github.com/kkeundotnet/kkmarkdown)도 어딘가에 받아 컴파일한다.
 
 ## 서버 설정
 
@@ -58,23 +60,23 @@ $ make
 
 `client/kkoment.js` 파일이 생성된다.
 
-## `kkoment.json`
+## `kkoment.json` 작성
 
-[kkoment.example.json](kkoment.example.json)을 참고하여 `kkoment.json` 파일을 생성한다.
+[kkoment.example.json](kkoment.example.json)을 참고하여 `kkoment.json` 파일을 만든다.
 
-*   (필수) url: 꼬멘트 서버로 사용할 도메인 주소.  
+*   (필수) url: 꼬멘트 서버로 사용할 도메인 주소  
     예) `https://kkoment.yourdomain.net`
 
-*   (필수) kkmarkdown.bin: ㄲ마크다운의 실행파일 경로.  
+*   (필수) kkmarkdown.bin: ㄲ마크다운의 실행파일 경로  
     예) `../kkmarkdown/_build/install/default/bin/kkmarkdown`
 
-*   (필수) kkmarkdown.php: ㄲ마크다운의 PHP파일 경로.  
+*   (필수) kkmarkdown.php: ㄲ마크다운의 PHP파일 경로  
     예) `../kkmarkdown/php/kkmarkdown.php`,
 
-*   (선택) db: DB 파일 경로.  
+*   (선택) db: DB 파일 경로  
     기본값) `_db/kkoment.sqlite3`
 
-*   (선택) vendor/autoload.php: PHP 외부 라이브러리를 읽기위한 `autoload.php` 경로.  
+*   (선택) vendor/autoload.php: PHP 외부 라이브러리를 읽기위한 `autoload.php` 경로  
     기본값) `vendor/autoload.php`
 
 이걸로 서버 설정은 끝이다.  [README.md](README.md)를 참고하여 자신의 블로그에서 꼬멘트를 사용해 보자!
