@@ -52,14 +52,6 @@ $ scripts/init_db.sh
 
 `_db/kkoment.sqlite3` 파일이 생성된다.
 
-## 자바스크립트 컴파일
-
-```
-$ make
-```
-
-`client/kkoment.js` 파일이 생성된다.
-
 ## `kkoment.json` 작성
 
 [kkoment.example.json](kkoment.example.json)을 참고하여 `kkoment.json` 파일을 만든다.
@@ -78,5 +70,13 @@ $ make
 
 *   (선택) vendor/autoload.php: PHP 외부 라이브러리를 읽기위한 `autoload.php` 경로  
     기본값) `vendor/autoload.php`
+
+## 자바스크립트 컴파일
+
+```
+$ make
+```
+
+`client/kkoment.js` 파일이 생성된다.
 
 이걸로 서버 설정은 끝이다.  [README.md](README.md)를 참고하여 자신의 블로그에서 꼬멘트를 사용해 보자!
