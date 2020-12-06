@@ -1,0 +1,7 @@
+{
+    "url": "https://kkoment.yourdomain.net",
+    "kkmarkdown.bin": "../kkmarkdown/_build/install/default/bin/kkmarkdown",
+    "kkmarkdown.php": "../kkmarkdown/php/kkmarkdown.php",
+    "db": "_db/kkoment.sqlite3",
+    "vendor/autoload.php": "vendor/autoload.php"
+}
