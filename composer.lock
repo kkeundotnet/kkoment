@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "921d45ce34ebf61b2598355708efcc90",
+    "content-hash": "3cc8a95d6e9c8b980fa7817ec71d2da7",
     "packages": [
         {
             "name": "kkeundotnet/kkrouter",
-            "version": "0.0.1",
+            "version": "0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kkeundotnet/kkrouter.git",
-                "reference": "4afde17573d552639113ac5e0de5cd6903815667"
+                "reference": "140b7960edd58f126655971ae712a4b1cd822ee3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kkeundotnet/kkrouter/zipball/4afde17573d552639113ac5e0de5cd6903815667",
-                "reference": "4afde17573d552639113ac5e0de5cd6903815667",
+                "url": "https://api.github.com/repos/kkeundotnet/kkrouter/zipball/140b7960edd58f126655971ae712a4b1cd822ee3",
+                "reference": "140b7960edd58f126655971ae712a4b1cd822ee3",
                 "shasum": ""
             },
             "require-dev": {
@@ -42,9 +42,9 @@
             "description": "Yet another simple PHP router",
             "support": {
                 "issues": "https://github.com/kkeundotnet/kkrouter/issues",
-                "source": "https://github.com/kkeundotnet/kkrouter/tree/0.0.1"
+                "source": "https://github.com/kkeundotnet/kkrouter/tree/0.0.2"
             },
-            "time": "2020-11-29T21:27:31+00:00"
+            "time": "2020-12-06T16:27:14+00:00"
         },
         {
             "name": "kkeundotnet/kkrss",

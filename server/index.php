@@ -42,8 +42,7 @@ case 'GET':
         }
     );
 
-    $request_uri = parse_url(KkomentUtil::get_field_exn($_SERVER, 'REQUEST_URI', ''));
-    $router->run($request_uri['path']);
+    $router->run();
     break;
 
 case 'POST':
