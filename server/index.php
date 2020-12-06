@@ -42,7 +42,8 @@ case 'GET':
         }
     );
 
-    $router->run(KkomentUtil::get_field_nullable($_SERVER, 'REDIRECT_URL') ?? '');
+    $request_uri = parse_url(KkomentUtil::get_field_exn($_SERVER, 'REQUEST_URI', ''));
+    $router->run($request_uri['path']);
     break;
 
 case 'POST':
