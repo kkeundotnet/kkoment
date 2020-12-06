@@ -28,5 +28,7 @@ echo "Need sudo to change the ownerships of _db and _db/kkoment.sqlite3"
 if [ `stat -c %G "${DB_DIR}"` != "www-data" ]; then
     (set -x; sudo chown "${WHOAMI}":www-data "${DB_DIR}")
 fi
+(set -x; chmod g+w "${DB_DIR}")
 
 (set -x; sudo chown "${WHOAMI}":www-data "${DB_FILE}")
+(set -x; chmod g+w "${DB_FILE}")
