@@ -1,10 +1,10 @@
 CREATE TABLE `comments` (
 	`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-	`url`	TEXT NOT NULL,
+	`domain_id`	TEXT NOT NULL,
 	`thread_id`	TEXT NOT NULL,
 	`name`	TEXT NOT NULL,
+	`name_hash`	TEXT NOT NULL,
 	`time`	TEXT NOT NULL,
-	`hashed`	TEXT NOT NULL,
 	`text`	TEXT NOT NULL,
 	`removed`	INTEGER
 );
