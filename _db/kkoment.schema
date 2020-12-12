@@ -6,10 +6,9 @@ CREATE TABLE `comments` (
 	`name_hash`	TEXT NOT NULL,
 	`time`	TEXT NOT NULL,
 	`text`	TEXT NOT NULL,
-	`removed`	INTEGER
+	`removed`	INTEGER NOT NULL
 );
 CREATE TABLE `salts` (
-	`name`	TEXT NOT NULL UNIQUE,
-	`salt`	TEXT NOT NULL,
-	PRIMARY KEY(name)
+	`name`	TEXT NOT NULL PRIMARY KEY UNIQUE,
+	`salt`	TEXT NOT NULL
 );
