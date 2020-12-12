@@ -54,7 +54,7 @@ class KkomentUtil
     public static function is_prefix(string $s, string $prefix) : bool
     {
         $prefix_len = strlen($prefix);
-        return strlen($s) >= $prefix_len && substr($s, 0, $prefix_len) == $prefix;
+        return strlen($s) >= $prefix_len && substr($s, 0, $prefix_len) === $prefix;
     }
 
     public static function is_recent(string $time) : bool
@@ -69,7 +69,7 @@ class KkomentUtil
 
     public static function make_absolute_path(string $base, string $path) : string
     {
-        if (strlen($path) >= 1 && $path[0] == '/') {
+        if (strlen($path) >= 1 && $path[0] === '/') {
             return $path;
         } else {
             return "{$base}/{$path}";

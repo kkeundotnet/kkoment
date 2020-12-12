@@ -9,7 +9,7 @@ require_once($kkoment_config->vendor_autoload_path);
 
 spl_autoload_register(function (string $class_name) : void {
     global $kkoment_config;
-    if ($class_name == 'Kkeundotnet\Kkmarkdown\Kkmarkdown') {
+    if ($class_name === 'Kkeundotnet\Kkmarkdown\Kkmarkdown') {
         require_once($kkoment_config->kkmarkdown_php_path);
     }
 

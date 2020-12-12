@@ -25,8 +25,8 @@ const kkoment = (function() {
     }): XMLHttpRequest {
         const http_request = new XMLHttpRequest();
         http_request.onreadystatechange = function(): void {
-            if (http_request.readyState == 4) {
-                if (http_request.status == 200) {
+            if (http_request.readyState === 4) {
+                if (http_request.status === 200) {
                     succeeded(http_request.responseText);
                 } else {
                     failed();
@@ -45,7 +45,7 @@ const kkoment = (function() {
             text_area.focus();
             const sel = (document as any).selection.createRange();
             sel.text = s;
-        } else if (text_area.selectionStart || text_area.selectionStart == 0) {
+        } else if (text_area.selectionStart || text_area.selectionStart === 0) {
             // MOZILLA and others
             const startPos = text_area.selectionStart;
             const endPos = text_area.selectionEnd;
@@ -344,7 +344,7 @@ const kkoment = (function() {
                 return get_http_request({
                     succeeded: function(_response_text: string): void {
                         text_area.value = '';
-                        if (preview.style.display != 'none') {
+                        if (preview.style.display !== 'none') {
                             preview.style.display = 'none';
                             input_area.style.display = '';
                         }
@@ -410,7 +410,7 @@ const kkoment = (function() {
             };
 
             preview_button.onclick = function(): void {
-                if (preview.style.display == 'none') {
+                if (preview.style.display === 'none') {
                     update_preview();
                     input_area.style.display = 'none';
                     preview.style.display = '';
@@ -441,7 +441,7 @@ const kkoment = (function() {
                 button.onclick = function(): void {
                     insert_at_cursor(text_area, emoji_html);
                     autosize.update(text_area);
-                    if (preview.style.display != 'none') {
+                    if (preview.style.display !== 'none') {
                         update_preview();
                     }
                 };
@@ -457,7 +457,7 @@ const kkoment = (function() {
             }
 
             emoji_button.onclick = function(): void {
-                if (emojis_area.style.display == 'none') {
+                if (emojis_area.style.display === 'none') {
                     emojis_area.style.display = '';
                 } else {
                     emojis_area.style.display = 'none';
@@ -495,7 +495,7 @@ const kkoment = (function() {
         }
 
         function initial_render(j: CommentRead[]): void {
-            if (j.length == 0) {
+            if (j.length === 0) {
                 loading_msg.innerText = '아직 댓글이 없습니다.';
             } else {
                 add_comments(j);

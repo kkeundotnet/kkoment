@@ -130,7 +130,7 @@ kkoment.load_n: (
 kkoment.load_n("kkoment.kkeun.net", function(num){
     if (num["recent"]) {
         return "recently replied";
-    } else if(num["n"] == 0) {
+    } else if(num["n"] === 0) {
         return "no reply";
     } else {
         return `[${num["n"]}]`;

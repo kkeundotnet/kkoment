@@ -24,7 +24,7 @@ case 'GET':
             if (!is_null($thread_id)) {
                 header('Access-Control-Allow-Origin: *');
                 (new Kkoment($domain_id, $thread_id))->load();
-            } elseif ($only_num == 1) {
+            } elseif ($only_num === '1') {
                 header('Access-Control-Allow-Origin: *');
                 (new Kkoment($domain_id, null))->load_num();
             } else {
