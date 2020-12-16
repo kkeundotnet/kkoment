@@ -56,5 +56,7 @@ class KkomentRssViewer extends KkRssViewer
                 $this->items[] = $this->item_of($row);
             }
         }
+        $stmt->close();
+        $db->close();
     }
 }

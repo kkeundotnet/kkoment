@@ -42,6 +42,8 @@ class Kkoment
             $all[] = $row;
         }
 
+        $stmt->close();
+        $db->close();
         KkomentUtil::echo_json($all);
     }
 
@@ -73,6 +75,8 @@ class Kkoment
         while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
             self::incr_counts($row['thread_id'], $row['time'], $counts);
         }
+        $stmt->close();
+        $db->close();
         KkomentUtil::echo_json($counts);
     }
 
@@ -132,8 +136,11 @@ class Kkoment
         $stmt->bindParam(':time', $time);
         $result = $stmt->execute();
         if ($result->fetchArray(SQLITE3_ASSOC)) {
+            $stmt->close();
+            $db->close();
             KkomentUtil::die404('Failed to check comment duplication');
         }
+        $stmt->close();
         
         // insert data
         $stmt = $db->prepare(<<<'SQL'
@@ -150,7 +157,11 @@ class Kkoment
         $stmt->bindParam(':removed', $removed);
         $result = $stmt->execute();
         if (!$result) {
+            $stmt->close();
+            $db->close();
             KkomentUtil::die404('Failed to insert comment');
         }
+        $stmt->close();
+        $db->close();
     }
 }
