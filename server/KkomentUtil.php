@@ -51,6 +51,12 @@ class KkomentUtil
         });
     }
 
+    public static function echo_json(array $arr)
+    {
+        header('Content-Type: application/json');
+        echo(json_encode($arr));
+    }
+
     public static function is_prefix(string $s, string $prefix) : bool
     {
         $prefix_len = strlen($prefix);
