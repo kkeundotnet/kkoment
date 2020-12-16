@@ -41,7 +41,7 @@ class KkomentRssViewer extends KkRssViewer
     private function init_items() : void
     {
         global $kkoment_config;
-        $db = new \SQLite3($kkoment_config->db_path);
+        $db = KkomentUtil::get_db($kkoment_config->db_path);
         $stmt = $db->prepare(<<<'SQL'
             SELECT id, name, text, thread_id, time
             FROM comments

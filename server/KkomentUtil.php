@@ -26,6 +26,14 @@ class KkomentUtil
         return file_get_contents($path);
     }
 
+    public static function get_db(string $db_path) : \SQLite3
+    {
+        $db = new \SQLite3($db_path);
+        /* NOTE: While this may help to avoid db failure, there is no guarantee. */
+        $db->busyTimeout(1000);
+        return $db;
+    }
+
     private static function get_field_common(array $arr, string $key, callable $callback)
     {
         if (!array_key_exists($key, $arr)) {
