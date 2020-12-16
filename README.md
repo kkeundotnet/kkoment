@@ -4,7 +4,7 @@
 Disqus에서 [내 글이 자꾸 스팸 처리](https://blog.kkeun.net/computer/2018-01-24-spam-of-disqus) 되어
 답답해서 울면서 만든 댓글 시스템.
 
-![대화](/example.png)
+![대화](/example2.png)
 
 특징
 ------
