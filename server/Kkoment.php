@@ -42,7 +42,7 @@ class Kkoment
             $all[] = $row;
         }
 
-        echo(json_encode($all));
+        KkomentUtil::echo_json($all);
     }
 
     private static function incr_counts(string $thread_id, string $time, array &$counts) : void
@@ -73,7 +73,7 @@ class Kkoment
         while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
             self::incr_counts($row['thread_id'], $row['time'], $counts);
         }
-        echo(json_encode($counts));
+        KkomentUtil::echo_json($counts);
     }
 
     private function gen_new_salt(int $length = 100) : string

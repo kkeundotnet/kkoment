@@ -18,8 +18,8 @@ case 'GET':
     $router->add(
         [],
         function () {
-            $domain_id = htmlspecialchars(KkomentUtil::get_field_exn($_GET, 'domain_id'));
-            $thread_id = htmlspecialchars(KkomentUtil::get_field_nullable($_GET, 'thread_id'));
+            $domain_id = KkomentUtil::get_field_exn($_GET, 'domain_id');
+            $thread_id = KkomentUtil::get_field_nullable($_GET, 'thread_id');
             $only_num = KkomentUtil::get_field_nullable($_GET, 'only_num');
             if (!is_null($thread_id)) {
                 header('Access-Control-Allow-Origin: *');
@@ -36,7 +36,7 @@ case 'GET':
     $router->add(
         [new KkRouterString('feed.xml')],
         function () {
-            $domain_id = htmlspecialchars(KkomentUtil::get_field_exn($_GET, 'domain_id'));
+            $domain_id = KkomentUtil::get_field_exn($_GET, 'domain_id');
             header('Access-Control-Allow-Origin: *');
             (new KkomentRssViewer($domain_id))->view();
         }
@@ -46,8 +46,8 @@ case 'GET':
     break;
 
 case 'POST':
-    $domain_id = htmlspecialchars(KkomentUtil::get_field_exn($_POST, 'domain_id'));
-    $thread_id = htmlspecialchars(KkomentUtil::get_field_exn($_POST, 'thread_id'));
+    $domain_id = KkomentUtil::get_field_exn($_POST, 'domain_id');
+    $thread_id = KkomentUtil::get_field_exn($_POST, 'thread_id');
     $name = KkomentUtil::get_field_exn($_POST, 'name');
     $pw = KkomentUtil::get_field_exn($_POST, 'pw');
     $text = KkomentUtil::get_field_exn($_POST, 'text');
