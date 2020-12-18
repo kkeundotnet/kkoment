@@ -22,6 +22,16 @@ class KkomentRssViewer extends KkRssViewer
         $this->init_items();
     }
 
+    private function link_of(string $domain_id, string $thread_id) : string
+    {
+        if (KkomentUtil::is_url($thread_id)) {
+            return $thread_id;
+        }
+        $domain_id = trim($domain_id, '/');
+        $thread_id = ltrim($thread_id, '/');
+        return "https://{$domain_id}/{$thread_id}";
+    }
+
     private function item_of(array $row) : KkRssItem
     {
         $id = $row['id'];
@@ -30,8 +40,8 @@ class KkomentRssViewer extends KkRssViewer
         $thread_id = $row['thread_id'];
         $time = $row['time'];
         return new KkRssItem(
-            "{$this->domain_id}/{$thread_id}의 꼬멘트 ({$id} 번째)",
-            "https://{$this->domain_id}/{$thread_id}",
+            "{$thread_id}의 꼬멘트 ({$id} 번째)",
+            self::link_of($this->domain_id, $thread_id),
             "{$name}<br>{$text}",
             "{$this->domain_id}/{$thread_id}/{$id}",
             strtotime($time)

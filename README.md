@@ -152,7 +152,7 @@ RSS 안에 적힐 주소는 도메인 이름(`<domain_id>`)과 쓰레드 이름(
 * 채널 주소: `https://<domain_id>/`
 * 아이템 주소: `https://<domain_id>/<thread_id>`
 
-RSS 이용자는 주소를 고려하여 `<thread_id>`를 정할 것을 추천한다.
+단, `thread_id`가 `http://`나 `https://`로 시작하는 URL인 경우 `thread_id`가 아이템 주소로 사용된다.
 
 마무리
 ------
