@@ -34,7 +34,13 @@ $ composer install
 
 추가로 라우팅을 PHP에서 직접 하기 때문에 이를 위한 서버 설정이 필요하다.
 
-*   Apache의 경우 [.htaccess](www/.htaccess)가 그일을 하니까 따로 건드릴 것이 없다.
+*   Apache의 경우 [.htaccess](www/.htaccess)가 그 일을 한다.  `.htaccess` 파일을 활성화 시키기
+    위해서는, 일반적으로 `/etc/apache2/apache2.conf`에 적힌 `kkoment/www` 디렉토리 설정에 다음을
+    추가하면 된다.
+
+    ```
+    AllowOverride All
+    ```
 
 *   Nginx의 경우, 서버 설정을 다음과 같이 바꾸어 준다.
 
