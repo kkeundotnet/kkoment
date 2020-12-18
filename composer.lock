@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3cc8a95d6e9c8b980fa7817ec71d2da7",
+    "content-hash": "70f88c35db9335d1b93ac74a957e4a2e",
     "packages": [
         {
             "name": "kkeundotnet/kkrouter",
@@ -48,16 +48,16 @@
         },
         {
             "name": "kkeundotnet/kkrss",
-            "version": "0.0.1",
+            "version": "0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kkeundotnet/kkrss.git",
-                "reference": "09c44f850154f6a99cd9d95d87342f9ad21c8762"
+                "reference": "6585fc2f100741a73041fa828fd6c9edd28351f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kkeundotnet/kkrss/zipball/09c44f850154f6a99cd9d95d87342f9ad21c8762",
-                "reference": "09c44f850154f6a99cd9d95d87342f9ad21c8762",
+                "url": "https://api.github.com/repos/kkeundotnet/kkrss/zipball/6585fc2f100741a73041fa828fd6c9edd28351f2",
+                "reference": "6585fc2f100741a73041fa828fd6c9edd28351f2",
                 "shasum": ""
             },
             "require-dev": {
@@ -82,9 +82,9 @@
             "description": "Yet another simple RSS generator",
             "support": {
                 "issues": "https://github.com/kkeundotnet/kkrss/issues",
-                "source": "https://github.com/kkeundotnet/kkrss/tree/0.0.1"
+                "source": "https://github.com/kkeundotnet/kkrss/tree/0.0.2"
             },
-            "time": "2020-11-30T21:34:58+00:00"
+            "time": "2020-12-18T19:43:19+00:00"
         }
     ],
     "packages-dev": [],
