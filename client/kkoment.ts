@@ -299,10 +299,12 @@ const kkoment = (function() {
             const name_area = document.createElement('input');
             name_area.type = 'text';
             name_area.placeholder = '이름';
+            name_area.className += ' kkoment-input';
 
             const pw_area = document.createElement('input');
             pw_area.type = 'password';
             pw_area.placeholder = '비밀번호';
+            pw_area.className += ' kkoment-input';
 
             const text_area = document.createElement('textarea');
             text_area.placeholder = '마크다운 문법으로 댓글을 써 보세요.';

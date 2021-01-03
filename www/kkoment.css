@@ -78,3 +78,7 @@
 .dark-mode .kkoment-alert {
     color: #ff5555;
 }
+
+.kkoment-input, .kkoment-text-area, .kkoment-button {
+    font-family: inherit;
+}
