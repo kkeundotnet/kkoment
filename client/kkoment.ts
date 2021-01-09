@@ -178,6 +178,43 @@ const kkoment = (function() {
 
         type Comment = CommentNew | CommentRead
 
+        let is_current_name_hash_short = true;
+
+        function set_elems_display(class_name: string, value: string): void {
+            const elems = document.getElementsByClassName(class_name);
+            for (let i = 0; i < elems.length; i++) {
+                const elem = elems[i];
+                if (elem instanceof HTMLElement) {
+                    elem.style.display = value;
+                }
+            }
+        }
+
+        function toggle_name_hash(): void {
+            set_elems_display('kkoment-name-hash-short', is_current_name_hash_short ? 'none' : '');
+            set_elems_display('kkoment-name-hash-long', is_current_name_hash_short ? '' : 'none');
+            is_current_name_hash_short = !is_current_name_hash_short;
+        }
+
+        function make_name_hash_span(name_hash: string, is_short: boolean): HTMLSpanElement {
+            const span = document.createElement('span');
+            span.innerText = is_short ? name_hash.substring(0, 6) : name_hash;
+            span.className += is_short ? ' kkoment-name-hash-short' : ' kkoment-name-hash-long';
+            if (is_short !== is_current_name_hash_short) {
+                span.style.display = 'none';
+            }
+            span.onclick = toggle_name_hash;
+            return span;
+        }
+
+        function make_name_hash_span_short(name_hash: string): HTMLSpanElement {
+            return make_name_hash_span(name_hash, true);
+        }
+
+        function make_name_hash_span_long(name_hash: string): HTMLSpanElement {
+            return make_name_hash_span(name_hash, false);
+        }
+
         function make_comment(j: Comment): HTMLDivElement {
             const comment = document.createElement('div');
 
@@ -218,7 +255,11 @@ const kkoment = (function() {
                     name_hash.innerText = '실제 사용될 이모티콘은 서버 측에서 계산돼요.';
                     break;
                 case 'read':
-                    name_hash.innerText = `${j.name_hash} ${j.id}`;
+                    const id = document.createTextNode(String(j.id));
+                    name_hash.appendChild(make_name_hash_span_short(j.name_hash));
+                    name_hash.appendChild(make_name_hash_span_long(j.name_hash));
+                    name_hash.appendChild(make_space());
+                    name_hash.appendChild(id);
                     break;
             }
 
