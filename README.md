@@ -63,7 +63,7 @@ Disqus에서 [내 글이 자꾸 스팸 처리](https://blog.kkeun.net/computer/2
 ### HTML 헤더에서 자바스크립트를 읽어 오고,
 
 ```html
-<script src="https://cdn.rawgit.com/jackmoore/autosize/4.0.2/dist/autosize.min.js"></script>
+<script src="https://cdn.rawgit.com/jackmoore/autosize/5.0.0/dist/autosize.min.js"></script>
 <script src="https://kkeun.net/kkmarkdown.js"></script>
 <script src="https://kkoment.kkeun.net/kkoment.js"></script>
 ```
