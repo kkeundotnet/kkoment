@@ -5,6 +5,9 @@ namespace Kkeundotnet\Kkoment;
 
 class KkomentUtil
 {
+    /* Set it as true for debugging temporarily */
+    const DEBUG = false;
+
     public static function assert_file_exists(string $path) : void
     {
         if (!file_exists($path)) {
@@ -12,12 +15,17 @@ class KkomentUtil
         }
     }
 
-    public static function die404(string $log) : void
+    public static function die404_quiet() : void
     {
-        error_log($log);
         http_response_code(404);
         echo('<h1>404 Not Found</h1>');
         die();
+    }
+
+    public static function die404(string $log) : void
+    {
+        error_log($log);
+        self::die404_quiet();
     }
 
     public static function file_get_contents_exn(string $path) : string
@@ -53,7 +61,11 @@ class KkomentUtil
     {
         return self::get_field_common($arr, $key, function () use ($default, $key) {
             if (is_null($default)) {
-                self::die404("Field not found: {$key}");
+                if (self::DEBUG) {
+                    self::die404("Field not found: {$key}");
+                } else {
+                    self::die404_quiet();
+                }
             }
             return $default;
         });
