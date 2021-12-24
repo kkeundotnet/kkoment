@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Kkeundotnet\Kkoment;
@@ -20,7 +21,7 @@ class Kkoment
         $this->one_week_before = strtotime('-1 week');
     }
 
-    public function load() : void
+    public function load(): void
     {
         global $kkoment_config;
         $db = KkomentUtil::get_db($kkoment_config->db_path);
@@ -47,7 +48,7 @@ class Kkoment
         KkomentUtil::echo_json($all);
     }
 
-    private static function incr_counts(string $thread_id, string $time, array &$counts) : void
+    private static function incr_counts(string $thread_id, string $time, array &$counts): void
     {
         if (array_key_exists($thread_id, $counts)) {
             $counts[$thread_id]['n'] += 1;
@@ -59,7 +60,7 @@ class Kkoment
         }
     }
 
-    public function load_num() : void
+    public function load_num(): void
     {
         global $kkoment_config;
         $db = KkomentUtil::get_db($kkoment_config->db_path);
@@ -80,7 +81,7 @@ class Kkoment
         KkomentUtil::echo_json($counts);
     }
 
-    private function gen_new_salt(int $length = 100) : string
+    private function gen_new_salt(int $length = 100): string
     {
         $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $chars_leng = strlen($chars);
@@ -91,7 +92,7 @@ class Kkoment
         return $salt;
     }
 
-    private function get_salt(\SQLite3 $db, string $name) : string
+    private function get_salt(\SQLite3 $db, string $name): string
     {
         $stmt = $db->prepare('SELECT salt FROM salts WHERE name = :name');
         $stmt->bindParam(':name', $name);
@@ -111,7 +112,7 @@ class Kkoment
         return $salt;
     }
 
-    public function add(string $name, string $pw, string $text) : void
+    public function add(string $name, string $pw, string $text): void
     {
         global $kkoment_config;
         $text = (new Kkmarkdown($kkoment_config->kkmarkdown_bin_path))->transform($text);
@@ -141,7 +142,7 @@ class Kkoment
             KkomentUtil::die404('Failed to check comment duplication');
         }
         $stmt->close();
-        
+
         // insert data
         $stmt = $db->prepare(<<<'SQL'
             INSERT INTO comments (domain_id, thread_id, name, name_hash, text, time, removed)

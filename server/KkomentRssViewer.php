@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Kkeundotnet\Kkoment;
@@ -22,7 +23,7 @@ class KkomentRssViewer extends KkRssViewer
         $this->init_items();
     }
 
-    private function link_of(string $domain_id, string $thread_id) : string
+    private function link_of(string $domain_id, string $thread_id): string
     {
         if (KkomentUtil::is_url($thread_id)) {
             return $thread_id;
@@ -32,7 +33,7 @@ class KkomentRssViewer extends KkRssViewer
         return "https://{$domain_id}/{$thread_id}";
     }
 
-    private function item_of(array $row) : KkRssItem
+    private function item_of(array $row): KkRssItem
     {
         $id = $row['id'];
         $name = '<p>'.htmlspecialchars($row['name']).'</p>';
@@ -48,7 +49,7 @@ class KkomentRssViewer extends KkRssViewer
         );
     }
 
-    private function init_items() : void
+    private function init_items(): void
     {
         global $kkoment_config;
         $db = KkomentUtil::get_db($kkoment_config->db_path);

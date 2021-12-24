@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Kkeundotnet\Kkoment;
@@ -12,7 +13,7 @@ class KkomentConfig
     public string $kkmarkdown_php_path;
     public string $vendor_autoload_path;
 
-    private static function get_field_path(array $config, string $key, ?string $default=null) : string
+    private static function get_field_path(array $config, string $key, ?string $default=null): string
     {
         $path = KkomentUtil::get_field_exn($config, $key, $default);
         $path = KkomentUtil::make_absolute_path(__DIR__.'/..', $path);
@@ -24,7 +25,7 @@ class KkomentConfig
     {
         $json = KkomentUtil::file_get_contents_exn(__DIR__.'/../kkoment.json');
         $config = json_decode($json, true);
-        
+
         /* Paths to kkmarkdown MUST be given in the config. */
         $this->kkmarkdown_bin_path = self::get_field_path($config, 'kkmarkdown.bin');
         $this->kkmarkdown_php_path = self::get_field_path($config, 'kkmarkdown.php');
@@ -35,4 +36,4 @@ class KkomentConfig
     }
 }
 
-$kkoment_config = new KkomentConfig;
+$kkoment_config = new KkomentConfig();

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Kkeundotnet\Kkoment;
@@ -6,35 +7,35 @@ namespace Kkeundotnet\Kkoment;
 class KkomentUtil
 {
     /* Set it as true for debugging temporarily */
-    const DEBUG = false;
+    public const DEBUG = false;
 
-    public static function assert_file_exists(string $path) : void
+    public static function assert_file_exists(string $path): void
     {
         if (!file_exists($path)) {
             self::die404("File not found: {$path}");
         }
     }
 
-    public static function die404_quiet() : void
+    public static function die404_quiet(): void
     {
         http_response_code(404);
         echo('<h1>404 Not Found</h1>');
         die();
     }
 
-    public static function die404(string $log) : void
+    public static function die404(string $log): void
     {
         error_log($log);
         self::die404_quiet();
     }
 
-    public static function file_get_contents_exn(string $path) : string
+    public static function file_get_contents_exn(string $path): string
     {
         self::assert_file_exists($path);
         return file_get_contents($path);
     }
 
-    public static function get_db(string $db_path) : \SQLite3
+    public static function get_db(string $db_path): \SQLite3
     {
         $db = new \SQLite3($db_path);
         /* NOTE: While this may help to avoid db failure, there is no guarantee. */
@@ -77,23 +78,23 @@ class KkomentUtil
         echo(json_encode($arr));
     }
 
-    public static function is_prefix(string $s, string $prefix) : bool
+    public static function is_prefix(string $s, string $prefix): bool
     {
         $prefix_len = strlen($prefix);
         return strlen($s) >= $prefix_len && substr($s, 0, $prefix_len) === $prefix;
     }
 
-    public static function is_recent(string $time) : bool
+    public static function is_recent(string $time): bool
     {
         return strtotime('-1 week') <= strtotime($time);
     }
 
-    public static function is_url(string $s) : bool
+    public static function is_url(string $s): bool
     {
         return self::is_prefix($s, 'http://') || self::is_prefix($s, 'https://');
     }
 
-    public static function make_absolute_path(string $base, string $path) : string
+    public static function make_absolute_path(string $base, string $path): string
     {
         if (strlen($path) >= 1 && $path[0] === '/') {
             return $path;
