@@ -3,11 +3,10 @@
 
 ## PHP
 
-버전 7.4
+버전 8.1
 
 ```
-$ sudo apt-get install php7.4 php7.4-cli php7.4-common php7.4-fpm php7.4-json php7.4-mbstring \
-                       php7.4-opcache php7.4-readline php7.4-sqlite3 php7.4-xml
+$ sudo apt install php8.1{,-{cli,common,mbstring,opcache,readline,sqlite3,xml}}
 ```
 
 ## Typescript
