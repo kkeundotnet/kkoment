@@ -79,6 +79,13 @@ const kkoment = (function() {
         domain_id: string,
         thread_id: string,
     ): void {
+        let need_update_preview = false;
+
+        // https://stackoverflow.com/questions/3583724/how-do-i-add-a-delay-in-a-javascript-loop
+        function timer(ms: number): Promise<void> {
+            return new Promise(res => setTimeout(res, ms));
+        }
+
         const div_nullable = document.getElementById(div_id);
         if (!div_nullable) {
             alert(`${div_id}를 못 찾았습니다.`);
@@ -377,11 +384,6 @@ const kkoment = (function() {
 
             const preview = document.createElement('div');
             preview.className += ' kkoment-preview';
-            preview.style.display = 'none';
-
-            const preview_button = document.createElement('button');
-            preview_button.innerHTML = '미리보기';
-            preview_button.classList.add('kkoment-button');
 
             function get_http_request_(send_button: HTMLButtonElement): XMLHttpRequest {
                 return get_http_request({
@@ -389,7 +391,6 @@ const kkoment = (function() {
                         text_area.value = '';
                         if (preview.style.display !== 'none') {
                             preview.style.display = 'none';
-                            input_area.style.display = '';
                         }
                         autosize.update(text_area);
                         normal_msg('전송됐습니다.');
@@ -452,26 +453,38 @@ const kkoment = (function() {
                 preview.appendChild(make_comment(j));
             };
 
-            preview_button.onclick = function(): void {
-                if (preview.style.display === 'none') {
-                    update_preview();
-                    input_area.style.display = 'none';
-                    preview.style.display = '';
-                } else {
-                    preview.style.display = 'none';
-                    input_area.style.display = '';
-                    autosize.update(text_area);
+            name_area.onkeyup = function(): void {
+                if (text_area.value !== "") {
+                    need_update_preview = true;
                 }
             };
+
+            text_area.onkeyup = function(): void {
+                if (text_area.value === "") {
+                    need_update_preview = false;
+                    preview.innerHTML = '';
+                } else {
+                    need_update_preview = true;
+                }
+            };
+
+            (async function(): Promise<void> {
+                while (true) {
+                    if (need_update_preview) {
+                        need_update_preview = false;
+                        update_preview();
+                    }
+                    await timer(1000);
+                }
+            })();
 
             const emoji_button = document.createElement('button');
             emoji_button.innerHTML = '&#x1F353;';
             emoji_button.classList.add('kkoment-button');
+            emoji_button.classList.add('kkoment-emoji-button');
 
             const buttons = document.createElement('p');
             buttons.appendChild(emoji_button);
-            buttons.appendChild(make_space());
-            buttons.appendChild(preview_button);
             buttons.appendChild(make_space());
             buttons.appendChild(send_button);
             buttons.appendChild(make_space());
@@ -484,9 +497,7 @@ const kkoment = (function() {
                 button.onclick = function(): void {
                     insert_at_cursor(text_area, emoji_html);
                     autosize.update(text_area);
-                    if (preview.style.display !== 'none') {
-                        update_preview();
-                    }
+                    update_preview();
                 };
                 return button;
             };

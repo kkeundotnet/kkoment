@@ -71,6 +71,10 @@
     line-height: 1.2;
 }
 
+.kkoment-emoji-button {
+    width: 100px;
+}
+
 .kkoment-alert {
     color: red;
 }
