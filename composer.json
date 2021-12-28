@@ -1,6 +1,7 @@
 {
     "require": {
-        "kkeundotnet/kkrouter": "^0.0.2",
-        "kkeundotnet/kkrss": "^0.0.2"
+        "kkeundotnet/kkrouter": "^0.0.3",
+        "kkeundotnet/kkrss": "^0.0.3",
+        "php": ">=8.1"
     }
 }

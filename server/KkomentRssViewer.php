@@ -11,19 +11,20 @@ use Kkeundotnet\Kkrss\KkViewer as KkRssViewer;
 
 class KkomentRssViewer extends KkRssViewer
 {
-    private string $domain_id;
-
-    public function __construct($domain_id)
-    {
-        $this->domain_id = $domain_id;
-        $this->title = "꼬멘트 - {$domain_id}";
-        $this->link = "https://{$domain_id}/";
-        $this->description = "{$this->title}의 지난 주 댓글";
-        $this->is_perma_link_guid = false;
-        $this->init_items();
+    public function __construct(
+        private readonly string $domain_id
+    ) {
+        $title = "꼬멘트 - {$domain_id}";
+        parent::__construct(
+            title: $title,
+            link: "https://{$domain_id}/",
+            description: "{$title}의 지난 주 댓글",
+            is_perma_link_guid: false,
+            items: self::init_items($domain_id),
+        );
     }
 
-    private function link_of(string $domain_id, string $thread_id): string
+    private static function link_of(string $domain_id, string $thread_id): string
     {
         if (KkomentUtil::is_url($thread_id)) {
             return $thread_id;
@@ -33,7 +34,7 @@ class KkomentRssViewer extends KkRssViewer
         return "https://{$domain_id}/{$thread_id}";
     }
 
-    private function item_of(array $row): KkRssItem
+    private static function item_of(string $domain_id, array $row): KkRssItem
     {
         $id = $row['id'];
         $name = '<p>'.htmlspecialchars($row['name']).'</p>';
@@ -41,15 +42,15 @@ class KkomentRssViewer extends KkRssViewer
         $thread_id = $row['thread_id'];
         $time = $row['time'];
         return new KkRssItem(
-            "{$thread_id}의 꼬멘트 ({$id} 번째)",
-            self::link_of($this->domain_id, $thread_id),
-            "{$name}<br>{$text}",
-            "{$this->domain_id}/{$thread_id}/{$id}",
-            strtotime($time)
+            title: "{$thread_id}의 꼬멘트 ({$id} 번째)",
+            link: self::link_of($domain_id, $thread_id),
+            html_description: "{$name}<br>{$text}",
+            guid: "{$domain_id}/{$thread_id}/{$id}",
+            pub_time: strtotime($time),
         );
     }
 
-    private function init_items(): void
+    private static function init_items(string $domain_id): array /* KkRssItem */
     {
         global $kkoment_config;
         $db = KkomentUtil::get_db($kkoment_config->db_path);
@@ -58,16 +59,18 @@ class KkomentRssViewer extends KkRssViewer
             FROM comments
             WHERE domain_id = :domain_id AND removed = 0
             SQL);
-        $stmt->bindParam(':domain_id', $this->domain_id);
+        $stmt->bindParam(':domain_id', $domain_id);
         $result = $stmt->execute();
 
-        $this->items = [];
+        $items = [];
         while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
             if (KkomentUtil::is_recent($row['time'])) {
-                $this->items[] = $this->item_of($row);
+                $items[] = self::item_of($domain_id, $row);
             }
         }
         $stmt->close();
         $db->close();
+
+        return $items;
     }
 }

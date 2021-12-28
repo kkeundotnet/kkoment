@@ -4,21 +4,24 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "70f88c35db9335d1b93ac74a957e4a2e",
+    "content-hash": "00adf2a96bed85a356f56cc6bc0dea81",
     "packages": [
         {
             "name": "kkeundotnet/kkrouter",
-            "version": "0.0.2",
+            "version": "0.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kkeundotnet/kkrouter.git",
-                "reference": "140b7960edd58f126655971ae712a4b1cd822ee3"
+                "reference": "8d63849c2f863334004653ec7cca47320752ff3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kkeundotnet/kkrouter/zipball/140b7960edd58f126655971ae712a4b1cd822ee3",
-                "reference": "140b7960edd58f126655971ae712a4b1cd822ee3",
+                "url": "https://api.github.com/repos/kkeundotnet/kkrouter/zipball/8d63849c2f863334004653ec7cca47320752ff3e",
+                "reference": "8d63849c2f863334004653ec7cca47320752ff3e",
                 "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "^9"
@@ -42,23 +45,26 @@
             "description": "Yet another simple PHP router",
             "support": {
                 "issues": "https://github.com/kkeundotnet/kkrouter/issues",
-                "source": "https://github.com/kkeundotnet/kkrouter/tree/0.0.2"
+                "source": "https://github.com/kkeundotnet/kkrouter/tree/0.0.3"
             },
-            "time": "2020-12-06T16:27:14+00:00"
+            "time": "2021-12-28T16:15:42+00:00"
         },
         {
             "name": "kkeundotnet/kkrss",
-            "version": "0.0.2",
+            "version": "0.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kkeundotnet/kkrss.git",
-                "reference": "6585fc2f100741a73041fa828fd6c9edd28351f2"
+                "reference": "938c9d4b7c3d055ebd00e42c5678a4c5bc21e7b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kkeundotnet/kkrss/zipball/6585fc2f100741a73041fa828fd6c9edd28351f2",
-                "reference": "6585fc2f100741a73041fa828fd6c9edd28351f2",
+                "url": "https://api.github.com/repos/kkeundotnet/kkrss/zipball/938c9d4b7c3d055ebd00e42c5678a4c5bc21e7b7",
+                "reference": "938c9d4b7c3d055ebd00e42c5678a4c5bc21e7b7",
                 "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "^9"
@@ -82,9 +88,9 @@
             "description": "Yet another simple RSS generator",
             "support": {
                 "issues": "https://github.com/kkeundotnet/kkrss/issues",
-                "source": "https://github.com/kkeundotnet/kkrss/tree/0.0.2"
+                "source": "https://github.com/kkeundotnet/kkrss/tree/0.0.3"
             },
-            "time": "2020-12-18T19:43:19+00:00"
+            "time": "2021-12-28T16:47:49+00:00"
         }
     ],
     "packages-dev": [],
@@ -93,7 +99,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=8.1"
+    },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.2.0"
 }
