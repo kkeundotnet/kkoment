@@ -60,7 +60,7 @@ const kkoment = (function() {
         }
     }
 
-    function id(): void { }
+    function nop(): void { }
 
     function get_emojis(ranges: { start: string, end: string }[]): string[] {
         const emojis: string[] = [];
@@ -568,7 +568,7 @@ const kkoment = (function() {
         num_cb: (num: kkoment_num) => string = function(num: kkoment_num): string {
             return num["n"].toString();
         },
-        full_cb: () => void = id,
+        full_cb: () => void = nop,
     ): void {
         function render(nums: { [key: string]: kkoment_num | undefined; }) {
             const kkoment_nums = document.getElementsByClassName('kkoment-num');
@@ -590,8 +590,8 @@ const kkoment = (function() {
                 render(JSON.parse(response_text));
                 full_cb();
             },
-            failed: id,
-            waiting: id,
+            failed: nop,
+            waiting: nop,
         });
         http_request.open('GET', thread_php);
         http_request.send();
