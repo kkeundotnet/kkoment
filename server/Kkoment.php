@@ -10,14 +10,12 @@ use Kkeundotnet\Kkmarkdown\Kkmarkdown as Kkmarkdown;
 
 class Kkoment
 {
-    private string $domain_id;
-    private ?string $thread_id;
-    private int $one_week_before;
+    private readonly int $one_week_before;
 
-    public function __construct(string $domain_id, ?string $thread_id)
-    {
-        $this->domain_id = $domain_id;
-        $this->thread_id = $thread_id;
+    public function __construct(
+        private readonly string $domain_id,
+        private readonly ?string $thread_id = null
+    ) {
         $this->one_week_before = strtotime('-1 week');
     }
 

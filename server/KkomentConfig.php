@@ -8,11 +8,11 @@ require_once(__DIR__.'/KkomentUtil.php');
 
 class KkomentConfig
 {
-    public string $db_path;
-    public string $url;
-    public string $kkmarkdown_bin_path;
-    public string $kkmarkdown_php_path;
-    public string $vendor_autoload_path;
+    public readonly string $db_path;
+    public readonly string $url;
+    public readonly string $kkmarkdown_bin_path;
+    public readonly string $kkmarkdown_php_path;
+    public readonly string $vendor_autoload_path;
 
     private static function get_field_path(array $config, string $key, ?string $default=null): string
     {
