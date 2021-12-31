@@ -24,8 +24,8 @@ case 'GET':
         [],
         function () {
             $domain_id = KkomentUtil::get_field_exn($_GET, 'domain_id');
-            $thread_id = KkomentUtil::get_field_nullable($_GET, 'thread_id');
-            $only_num = KkomentUtil::get_field_nullable($_GET, 'only_num');
+            $thread_id = $_GET['thread_id'] ?? null;
+            $only_num = $_GET['only_num'] ?? null;
             if (!is_null($thread_id)) {
                 header('Access-Control-Allow-Origin: *');
                 (new Kkoment($domain_id, $thread_id))->load();

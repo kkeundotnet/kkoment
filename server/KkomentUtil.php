@@ -43,33 +43,15 @@ class KkomentUtil
         return $db;
     }
 
-    private static function get_field_common(array $arr, string $key, callable $callback)
+    public static function get_field_exn(array $arr, string $key)
     {
-        if (!array_key_exists($key, $arr)) {
-            return $callback();
-        }
-        return $arr[$key];
-    }
-
-    public static function get_field_nullable(array $arr, string $key)
-    {
-        return self::get_field_common($arr, $key, function () {
-            return null;
-        });
-    }
-
-    public static function get_field_exn(array $arr, string $key, $default=null)
-    {
-        return self::get_field_common($arr, $key, function () use ($default, $key) {
-            if (is_null($default)) {
-                if (self::DEBUG) {
-                    self::die404("Field not found: {$key}");
-                } else {
-                    self::die404_quiet();
-                }
+        return $arr[$key] ?? (function () use ($default, $key) {
+            if (self::DEBUG) {
+                self::die404("Field not found: {$key}");
+            } else {
+                self::die404_quiet();
             }
-            return $default;
-        });
+        })();
     }
 
     public static function echo_json(array $arr)
