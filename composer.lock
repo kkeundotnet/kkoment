@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "00adf2a96bed85a356f56cc6bc0dea81",
+    "content-hash": "4ca1375cdc5b581fc1be94a15ee8c9e3",
     "packages": [
         {
             "name": "kkeundotnet/kkrouter",
@@ -51,16 +51,16 @@
         },
         {
             "name": "kkeundotnet/kkrss",
-            "version": "0.0.3",
+            "version": "0.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kkeundotnet/kkrss.git",
-                "reference": "938c9d4b7c3d055ebd00e42c5678a4c5bc21e7b7"
+                "reference": "7389e32eed82a4c17ccf1314a1e0bb42a540a205"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kkeundotnet/kkrss/zipball/938c9d4b7c3d055ebd00e42c5678a4c5bc21e7b7",
-                "reference": "938c9d4b7c3d055ebd00e42c5678a4c5bc21e7b7",
+                "url": "https://api.github.com/repos/kkeundotnet/kkrss/zipball/7389e32eed82a4c17ccf1314a1e0bb42a540a205",
+                "reference": "7389e32eed82a4c17ccf1314a1e0bb42a540a205",
                 "shasum": ""
             },
             "require": {
@@ -88,9 +88,9 @@
             "description": "Yet another simple RSS generator",
             "support": {
                 "issues": "https://github.com/kkeundotnet/kkrss/issues",
-                "source": "https://github.com/kkeundotnet/kkrss/tree/0.0.3"
+                "source": "https://github.com/kkeundotnet/kkrss/tree/0.0.4"
             },
-            "time": "2021-12-28T16:47:49+00:00"
+            "time": "2021-12-31T13:00:22+00:00"
         }
     ],
     "packages-dev": [],

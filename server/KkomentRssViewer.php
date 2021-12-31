@@ -14,6 +14,7 @@ class KkomentRssViewer extends KkRssViewer
     public function __construct(
         private readonly string $domain_id
     ) {
+        global $kkoment_config;
         $title = "꼬멘트 - {$domain_id}";
         parent::__construct(
             title: $title,
@@ -21,6 +22,7 @@ class KkomentRssViewer extends KkRssViewer
             description: "{$title}의 지난 주 댓글",
             is_perma_link_guid: false,
             items: self::init_items($domain_id),
+            feed_link: "{$kkoment_config->url}/feed.xml?domain_id={$domain_id}",
         );
     }
 
