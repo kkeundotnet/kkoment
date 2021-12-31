@@ -28,8 +28,8 @@ class Kkoment
             FROM comments
             WHERE domain_id = :domain_id AND thread_id = :thread_id
             SQL);
-        $stmt->bindParam(':domain_id', $this->domain_id);
-        $stmt->bindParam(':thread_id', $this->thread_id);
+        $stmt->bindValue(':domain_id', $this->domain_id);
+        $stmt->bindValue(':thread_id', $this->thread_id);
         $result = $stmt->execute();
 
         $removed_msg = '<p class="kkoment-alert">관리자에 의해 삭제된 메세지입니다.</p>';
@@ -67,7 +67,7 @@ class Kkoment
             FROM comments
             WHERE domain_id = :domain_id
             SQL);
-        $stmt->bindParam(':domain_id', $this->domain_id);
+        $stmt->bindValue(':domain_id', $this->domain_id);
         $result = $stmt->execute();
 
         $counts = [];
@@ -128,8 +128,8 @@ class Kkoment
             WHERE domain_id = :domain_id AND thread_id = :thread_id AND name_hash = :name_hash
               AND text = :text AND time = :time
             SQL);
-        $stmt->bindParam(':domain_id', $this->domain_id);
-        $stmt->bindParam(':thread_id', $this->thread_id);
+        $stmt->bindValue(':domain_id', $this->domain_id);
+        $stmt->bindValue(':thread_id', $this->thread_id);
         $stmt->bindParam(':name_hash', $name_hash);
         $stmt->bindParam(':text', $text);
         $stmt->bindParam(':time', $time);
@@ -147,8 +147,8 @@ class Kkoment
             VALUES (:domain_id, :thread_id, :name, :name_hash, :text, :time, :removed)
             SQL);
         $removed = 0;
-        $stmt->bindParam(':domain_id', $this->domain_id);
-        $stmt->bindParam(':thread_id', $this->thread_id);
+        $stmt->bindValue(':domain_id', $this->domain_id);
+        $stmt->bindValue(':thread_id', $this->thread_id);
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':name_hash', $name_hash);
         $stmt->bindParam(':text', $text);

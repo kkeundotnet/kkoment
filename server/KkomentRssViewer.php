@@ -11,9 +11,8 @@ use Kkeundotnet\Kkrss\KkViewer as KkRssViewer;
 
 class KkomentRssViewer extends KkRssViewer
 {
-    public function __construct(
-        private readonly string $domain_id
-    ) {
+    public function __construct(string $domain_id)
+    {
         global $kkoment_config;
         $title = "꼬멘트 - {$domain_id}";
         parent::__construct(
