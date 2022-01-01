@@ -14,9 +14,12 @@ class KkomentConfig
     public readonly string $kkmarkdown_php_path;
     public readonly string $vendor_autoload_path;
 
-    private static function get_field_path(array $config, string $key): string
-    {
-        $path = KkomentUtil::get_field_exn($config, $key);
+    private static function get_field_path(
+        array $config,
+        string $key,
+        ?string $default = null,
+    ): string {
+        $path = KkomentUtil::get_field_exn($config, $key, $default);
         $path = KkomentUtil::make_absolute_path(__DIR__.'/..', $path);
         KkomentUtil::assert_file_exists($path);
         return $path;
@@ -33,8 +36,12 @@ class KkomentConfig
         $this->kkmarkdown_php_path = self::get_field_path($config, 'kkmarkdown.php');
 
         /* Paths to the DB file and composer's autoload.php may be given in the config. */
-        $this->db_path = $config['db'] ?? '_db/kkoment.sqlite3';
-        $this->vendor_autoload_path = $config['vendor/autoload.php'] ?? 'vendor/autoload.php';
+        $this->db_path = self::get_field_path($config, 'db', '_db/kkoment.sqlite3');
+        $this->vendor_autoload_path = self::get_field_path(
+            $config,
+            'vendor/autoload.php',
+            'vendor/autoload.php',
+        );
     }
 }
 

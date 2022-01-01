@@ -43,9 +43,12 @@ class KkomentUtil
         return $db;
     }
 
-    public static function get_field_exn(array $arr, string $key)
+    public static function get_field_exn(array $arr, string $key, $default = null)
     {
         return $arr[$key] ?? (function () use ($default, $key) {
+            if (!is_null($default)) {
+                return $default;
+            }
             if (self::DEBUG) {
                 self::die404("Field not found: {$key}");
             } else {
