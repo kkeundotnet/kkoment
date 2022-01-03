@@ -389,9 +389,7 @@ const kkoment = (function() {
                 return get_http_request({
                     succeeded: function(_response_text: string): void {
                         text_area.value = '';
-                        if (preview.style.display !== 'none') {
-                            preview.style.display = 'none';
-                        }
+                        preview.innerHTML = '';
                         autosize.update(text_area);
                         normal_msg('전송됐습니다.');
                         refresh_comments(normal_msg, error_msg);
