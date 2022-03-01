@@ -1,1 +1,1 @@
-../client/kkoment.js
+../client/dist/kkoment.js

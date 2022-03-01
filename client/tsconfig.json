@@ -1,22 +1,22 @@
 {
     "compilerOptions": {
-        "noImplicitAny": true,
-        "noImplicitThis": true,
-        "removeComments": true,
-        "preserveConstEnums": true,
-        "strict": true,
+        "allowSyntheticDefaultImports": true,
+        "jsx": "react",
+        "lib": ["dom", "es6"],
+        "module": "es6",
+        "moduleResolution": "node",
         "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
         "noImplicitReturns": true,
+        "noImplicitThis": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "lib": [
-            "dom",
-            "es2018",
-        ],
-        "outFile": "kkoment.js"
+        "preserveConstEnums": true,
+        "removeComments": true,
+        "strict": true,
     },
     "files": [
-        "url.ts",
-        "kkoment.ts",
+        "src/url.ts",
+        "src/main.tsx",
     ]
 }

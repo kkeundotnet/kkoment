@@ -9,12 +9,6 @@
 $ sudo apt install php8.1{,-{cli,common,mbstring,opcache,readline,sqlite3,xml}}
 ```
 
-## Typescript
-
-버전 3.6.2
-
-https://www.typescriptlang.org/download
-
 ## PHP 외부 라이브러리 설치
 
 ```
@@ -79,9 +73,11 @@ $ scripts/init_db.sh
 ## 자바스크립트 컴파일
 
 ```
-$ make
+$ cd client
+client$ npm install
+client$ make
 ```
 
-`client/kkoment.js` 파일이 생성된다.
+`client/dist/kkoment.js` 파일이 생성된다.
 
 이걸로 서버 설정은 끝이다.  [README.md](README.md)를 참고하여 자신의 블로그에서 꼬멘트를 사용해 보자!

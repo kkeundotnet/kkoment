@@ -6,5 +6,5 @@ with open('../kkoment.json') as json_file:
     data = json.load(json_file)
     url = data['url']
 
-with open('url.ts', 'w') as ts_file:
-    ts_file.write("const kkoment_url = '{}';".format(url))
+with open('src/url.ts', 'w') as ts_file:
+    ts_file.write("export const kkoment_url = '{}';".format(url))

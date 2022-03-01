@@ -1,5 +1,8 @@
 /_db/*.sqlite3
-/client/kkoment.js
-/client/url.ts
+/client/dist
+/client/node_modules
+/client/src/main.js
+/client/src/url.js
+/client/src/url.ts
 /kkoment.json
 /vendor
