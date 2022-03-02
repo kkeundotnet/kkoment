@@ -103,40 +103,36 @@ class Comment extends React.Component<{
 
     render() {
         const comment = this.props.comment;
+
+        const emoji = <td rowSpan={2} className='kkoment-emoji'>
+            {comment.state === CommentState.Read && this.character_of(comment.name_hash)}
+            {comment.state === CommentState.New && this.character_for_new()}
+        </td>;
+
+        const name = <td>
+            {comment.name}
+            {' '}
+            <span className='kkoment-time'>
+                {comment.state === CommentState.Read && (new Date(comment.time)).toLocaleString()}
+                {comment.state === CommentState.New && comment.time.toLocaleString()}
+            </span>
+        </td>;
+
+        const hash = <td className='kkoment-name-hash'>
+            {comment.state === CommentState.Read && <span>
+                <NameHash name_hash={comment.name_hash}
+                    short_name_hash={this.props.short_name_hash}
+                    toggle_short_name_hash={this.props.toggle_short_name_hash} />
+                {' '}
+                {comment.id}
+            </span>}
+            {comment.state === CommentState.New && '실제 사용될 이모티콘은 서버 측에서 계산됩니다.'}
+        </td>;
+
         return <div>
             <table className='kkoment-info'><tbody>
-                <tr>
-                    <td rowSpan={2} className='kkoment-emoji'>
-                        {comment.state === CommentState.Read &&
-                            this.character_of(comment.name_hash)
-                        }
-                        {comment.state === CommentState.New && this.character_for_new()}
-                    </td>
-                    <td>
-                        {comment.name}
-                        {' '}
-                        <span className='kkoment-time'>
-                            {comment.state === CommentState.Read &&
-                                (new Date(comment.time)).toLocaleString()
-                            }
-                            {comment.state === CommentState.New && comment.time.toLocaleString()}
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td className='kkoment-name-hash'>
-                        {comment.state === CommentState.Read && <span>
-                            <NameHash name_hash={comment.name_hash}
-                                short_name_hash={this.props.short_name_hash}
-                                toggle_short_name_hash={this.props.toggle_short_name_hash} />
-                            {' '}
-                            {comment.id}
-                        </span>}
-                        {comment.state === CommentState.New &&
-                            '실제 사용될 이모티콘은 서버 측에서 계산됩니다.'
-                        }
-                    </td>
-                </tr>
+                <tr>{emoji}{name}</tr>
+                <tr>{hash}</tr>
             </tbody></table>
             <div className='kkoment-text' dangerouslySetInnerHTML={{ __html: comment.text }} />
             {comment.state === CommentState.Read && <hr className='kkoment-hr' />}
@@ -351,64 +347,74 @@ class InputForm extends React.Component<input_form_props, input_form_state> {
     }
 
     render() {
-        return <div>
-            <p>
-                <input type='text'
-                    placeholder='이름'
-                    className='kkoment-input'
-                    value={this.state.name}
-                    onChange={this.handleNameChange}
-                />
-                {' '}
-                <input type='password'
-                    placeholder='비밀번호'
-                    className='kkoment-input'
-                    value={this.state.pw}
-                    onChange={this.handlePwChange}
-                />
-            </p>
-            <TextareaAutosize placeholder='마크다운 문법으로 댓글을 써 봅니다.'
-                className='kkoment-text-area'
-                value={this.state.text_area}
-                onChange={this.handleTextAreaChange}
-                minRows={2}
-                ref={this.text_area_ref}
+        const name = <p>
+            <input type='text'
+                placeholder='이름'
+                className='kkoment-input'
+                value={this.state.name}
+                onChange={this.handleNameChange}
             />
-            {this.state.preview !== '' && <div className='kkoment-preview'>
-                <Comment comment={{
-                    state: CommentState.New,
-                    name: this.state.name,
-                    text: this.state.preview,
-                    time: new Date(),
-                }}
-                    characters={[]}
-                    short_name_hash={true}
-                    toggle_short_name_hash={() => { }}
-                />
-            </div>}
-            <p>
-                <button className='kkoment-button kkoment-emoji-button'
-                    dangerouslySetInnerHTML={{ __html: '&#x1F353;' }}
-                    onClick={this.toggle_emojis_area} />
-                {' '}
-                <button className='kkoment-button'
-                    onClick={this.send}
-                    disabled={this.state.send_button_disabled}>
-                    전송
-                </button>
-                {' '}
-                <span className={this.state.msg_console_classname}>{this.state.msg_console}</span>
-            </p>
-            {this.state.emojis_area_display && <div className='kkoment-emojis-area'>
-                {this.props.emojis.map((emoji) => {
-                    return <span>
-                        <span dangerouslySetInnerHTML={{ __html: `&#x${emoji};` }}
-                            onClick={this.insert_at_cursor}
-                        />
-                        {' '}
-                    </span>
-                })}
-            </div>}
+            {' '}
+            <input type='password'
+                placeholder='비밀번호'
+                className='kkoment-input'
+                value={this.state.pw}
+                onChange={this.handlePwChange}
+            />
+        </p>;
+
+        const text_area = <TextareaAutosize placeholder='마크다운 문법으로 댓글을 써 봅니다.'
+            className='kkoment-text-area'
+            value={this.state.text_area}
+            onChange={this.handleTextAreaChange}
+            minRows={2}
+            ref={this.text_area_ref}
+        />;
+
+        const preview = this.state.preview !== '' && <div className='kkoment-preview'>
+            <Comment comment={{
+                state: CommentState.New,
+                name: this.state.name,
+                text: this.state.preview,
+                time: new Date(),
+            }}
+                characters={[]}
+                short_name_hash={true}
+                toggle_short_name_hash={() => { }}
+            />
+        </div>;
+
+        const buttons = <p>
+            <button className='kkoment-button kkoment-emoji-button'
+                dangerouslySetInnerHTML={{ __html: '&#x1F353;' }}
+                onClick={this.toggle_emojis_area} />
+            {' '}
+            <button className='kkoment-button'
+                onClick={this.send}
+                disabled={this.state.send_button_disabled}>
+                전송
+            </button>
+            {' '}
+            <span className={this.state.msg_console_classname}>{this.state.msg_console}</span>
+        </p>;
+
+        const emojis = this.state.emojis_area_display && <div className='kkoment-emojis-area'>
+            {this.props.emojis.map((emoji) => {
+                return <span>
+                    <span dangerouslySetInnerHTML={{ __html: `&#x${emoji};` }}
+                        onClick={this.insert_at_cursor}
+                    />
+                    {' '}
+                </span>
+            })}
+        </div>;
+
+        return <div>
+            {name}
+            {text_area}
+            {preview}
+            {buttons}
+            {emojis}
         </div>;
     }
 }
