@@ -20,14 +20,14 @@ class KkomentConfig
         ?string $default = null,
     ): string {
         $path = KkomentUtil::get_field_exn($config, $key, $default);
-        $path = KkomentUtil::make_absolute_path(__DIR__.'/..', $path);
+        $path = KkomentUtil::make_absolute_path(__DIR__.'/../..', $path);
         KkomentUtil::assert_file_exists($path);
         return $path;
     }
 
     public function __construct()
     {
-        $json = KkomentUtil::file_get_contents_exn(__DIR__.'/../kkoment.json');
+        $json = KkomentUtil::file_get_contents_exn(__DIR__.'/../../kkoment.json');
         $config = json_decode($json, true);
 
         /* Kkoment server url and paths to kkmarkdown MUST be given in the config. */
@@ -36,11 +36,11 @@ class KkomentConfig
         $this->kkmarkdown_php_path = self::get_field_path($config, 'kkmarkdown.php');
 
         /* Paths to the DB file and composer's autoload.php may be given in the config. */
-        $this->db_path = self::get_field_path($config, 'db', '_db/kkoment.sqlite3');
+        $this->db_path = self::get_field_path($config, 'db', 'db/kkoment.sqlite3');
         $this->vendor_autoload_path = self::get_field_path(
             $config,
             'vendor/autoload.php',
-            'vendor/autoload.php',
+            'server/vendor/autoload.php',
         );
     }
 }

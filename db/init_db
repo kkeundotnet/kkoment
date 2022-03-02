@@ -5,8 +5,7 @@
 set -e -u
 
 # https://stackoverflow.com/questions/59895/how-to-get-the-source-directory-of-a-bash-script-from-within-the-script-itself
-SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-DB_DIR="${SCRIPTS_DIR}/../_db"
+DB_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 DB_FILE="${DB_DIR}/kkoment.sqlite3"
 SCHEMA_FILE="${DB_DIR}/kkoment.schema"
 WHOAMI=`whoami`
@@ -23,7 +22,7 @@ fi
 
 (set -x; sqlite3 "${DB_FILE}" < "${SCHEMA_FILE}")
 
-echo "Need sudo to change the ownerships of _db and _db/kkoment.sqlite3"
+echo "Need sudo to change the ownerships of db and db/kkoment.sqlite3"
 
 if [ `stat -c %G "${DB_DIR}"` != "www-data" ]; then
     (set -x; sudo chown "${WHOAMI}":www-data "${DB_DIR}")

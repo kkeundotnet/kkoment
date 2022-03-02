@@ -5,8 +5,7 @@
 set -e -u
 
 # https://stackoverflow.com/questions/59895/how-to-get-the-source-directory-of-a-bash-script-from-within-the-script-itself
-SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-DB_DIR="${SCRIPTS_DIR}/../_db"
+DB_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 DB_FILE="${DB_DIR}/kkoment.sqlite3"
 SCHEMA_FILE="${DB_DIR}/kkoment.schema"
 
