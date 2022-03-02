@@ -63,8 +63,8 @@ class NameHash extends React.Component<{
 }
 
 enum CommentState {
-    New,
     Read,
+    New,
 }
 
 type CommentRead = {
@@ -84,10 +84,8 @@ type CommentNew = {
     time: Date;
 };
 
-type Comment = CommentNew | CommentRead
-
-class CommentRender extends React.Component<{
-    comment: Comment,
+class Comment extends React.Component<{
+    comment: CommentRead | CommentNew,
     characters: string[],
     short_name_hash: boolean,
     toggle_short_name_hash: () => void,
@@ -109,25 +107,24 @@ class CommentRender extends React.Component<{
             <table className='kkoment-info'><tbody>
                 <tr>
                     <td rowSpan={2} className='kkoment-emoji'>
-                        {comment.state === CommentState.New && this.character_for_new()}
                         {comment.state === CommentState.Read &&
-                            this.character_of(comment.name_hash)}
+                            this.character_of(comment.name_hash)
+                        }
+                        {comment.state === CommentState.New && this.character_for_new()}
                     </td>
                     <td>
                         {comment.name}
                         {' '}
                         <span className='kkoment-time'>
-                            {comment.state === CommentState.New && comment.time.toLocaleString()}
                             {comment.state === CommentState.Read &&
                                 (new Date(comment.time)).toLocaleString()
                             }
+                            {comment.state === CommentState.New && comment.time.toLocaleString()}
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td className='kkoment-name-hash'>
-                        {comment.state === CommentState.New &&
-                            '실제 사용될 이모티콘은 서버 측에서 계산됩니다.'}
                         {comment.state === CommentState.Read && <span>
                             <NameHash name_hash={comment.name_hash}
                                 short_name_hash={this.props.short_name_hash}
@@ -135,6 +132,9 @@ class CommentRender extends React.Component<{
                             {' '}
                             {comment.id}
                         </span>}
+                        {comment.state === CommentState.New &&
+                            '실제 사용될 이모티콘은 서버 측에서 계산됩니다.'
+                        }
                     </td>
                 </tr>
             </tbody></table>
@@ -145,7 +145,9 @@ class CommentRender extends React.Component<{
 }
 
 type comments_body_props = { comments: CommentRead[], characters: string[] }
+
 type comments_body_state = { short_name_hash: boolean }
+
 class CommentsBody extends React.Component<comments_body_props, comments_body_state> {
     constructor(props: comments_body_props) {
         super(props);
@@ -159,7 +161,7 @@ class CommentsBody extends React.Component<comments_body_props, comments_body_st
 
     render() {
         return <div>{this.props.comments.map((comment) =>
-            <CommentRender key={comment.id}
+            <Comment key={comment.id}
                 comment={comment}
                 characters={this.props.characters}
                 short_name_hash={this.state.short_name_hash}
@@ -176,6 +178,7 @@ type input_form_props = {
     thread_php: string,
     thread_php_succeed: (response_text: string) => void,
 }
+
 type input_form_state = {
     name: string,
     pw: string,
@@ -186,6 +189,7 @@ type input_form_state = {
     emojis_area_display: boolean,
     send_button_disabled: boolean,
 }
+
 class InputForm extends React.Component<input_form_props, input_form_state> {
     need_update_preview: boolean = false;
     text_area_ref: React.RefObject<HTMLTextAreaElement>;
@@ -371,7 +375,7 @@ class InputForm extends React.Component<input_form_props, input_form_state> {
                 ref={this.text_area_ref}
             />
             {this.state.preview !== '' && <div className='kkoment-preview'>
-                <CommentRender comment={{
+                <Comment comment={{
                     state: CommentState.New,
                     name: this.state.name,
                     text: this.state.preview,
@@ -395,20 +399,17 @@ class InputForm extends React.Component<input_form_props, input_form_state> {
                 {' '}
                 <span className={this.state.msg_console_classname}>{this.state.msg_console}</span>
             </p>
-            {
-                this.state.emojis_area_display && <div className='kkoment-emojis-area'>
-                    {this.props.emojis.map((emoji) => {
-                        const emoji_html = `&#x${emoji};`;
-                        return <span>
-                            <span dangerouslySetInnerHTML={{ __html: emoji_html }}
-                                onClick={this.insert_at_cursor}
-                            />
-                            {' '}
-                        </span>
-                    })}
-                </div>
-            }
-        </div >;
+            {this.state.emojis_area_display && <div className='kkoment-emojis-area'>
+                {this.props.emojis.map((emoji) => {
+                    return <span>
+                        <span dangerouslySetInnerHTML={{ __html: `&#x${emoji};` }}
+                            onClick={this.insert_at_cursor}
+                        />
+                        {' '}
+                    </span>
+                })}
+            </div>}
+        </div>;
     }
 }
 
@@ -422,11 +423,13 @@ class Notice extends React.Component {
 }
 
 type load_props = { domain_id: string, thread_id: string }
+
 type load_state = {
     loading_msg: string | null,
     initialized: boolean,
     comments: CommentRead[],
 }
+
 class Load extends React.Component<load_props, load_state> {
     characters = get_emojis([
         { start: '1f32d', end: '1f335' },
