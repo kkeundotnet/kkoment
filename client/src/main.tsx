@@ -202,25 +202,25 @@ class InputForm extends React.Component<input_form_props, input_form_state> {
             emojis_area_display: false,
             send_button_disabled: false,
         };
-        this.handleNameChange = this.handleNameChange.bind(this);
-        this.handlePwChange = this.handlePwChange.bind(this);
-        this.handleTextAreaChange = this.handleTextAreaChange.bind(this);
+        this.handle_name_change = this.handle_name_change.bind(this);
+        this.hangle_pw_change = this.hangle_pw_change.bind(this);
+        this.handle_text_area_change = this.handle_text_area_change.bind(this);
         this.toggle_emojis_area = this.toggle_emojis_area.bind(this);
         this.insert_at_cursor = this.insert_at_cursor.bind(this);
         this.send = this.send.bind(this);
         this.text_area_ref = React.createRef();
     }
 
-    handleNameChange(event: React.FormEvent<HTMLInputElement>) {
+    handle_name_change(event: React.FormEvent<HTMLInputElement>) {
         this.setState({ name: event.currentTarget.value });
         this.need_update_preview = true;
     }
 
-    handlePwChange(event: React.FormEvent<HTMLInputElement>) {
+    hangle_pw_change(event: React.FormEvent<HTMLInputElement>) {
         this.setState({ pw: event.currentTarget.value });
     }
 
-    handleTextAreaChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
+    handle_text_area_change(event: React.ChangeEvent<HTMLTextAreaElement>) {
         this.setState({ text_area: event.currentTarget.value });
         this.need_update_preview = true;
     }
@@ -352,21 +352,21 @@ class InputForm extends React.Component<input_form_props, input_form_state> {
                 placeholder='이름'
                 className='kkoment-input'
                 value={this.state.name}
-                onChange={this.handleNameChange}
+                onChange={this.handle_name_change}
             />
             {' '}
             <input type='password'
                 placeholder='비밀번호'
                 className='kkoment-input'
                 value={this.state.pw}
-                onChange={this.handlePwChange}
+                onChange={this.hangle_pw_change}
             />
         </p>;
 
         const text_area = <TextareaAutosize placeholder='마크다운 문법으로 댓글을 써 봅니다.'
             className='kkoment-text-area'
             value={this.state.text_area}
-            onChange={this.handleTextAreaChange}
+            onChange={this.handle_text_area_change}
             minRows={2}
             ref={this.text_area_ref}
         />;
