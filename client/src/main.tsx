@@ -336,7 +336,6 @@ class InputForm extends React.Component<input_form_props, input_form_state> {
                             ? ''
                             : kkmarkdown.trans(this.state.text_area)
                     });
-
                 }
                 await timer(1000);
             }
@@ -518,8 +517,7 @@ class Load extends React.Component<load_props, load_state> {
         http_request.send();
     }
 
-    componentWillUnmount() {
-    }
+    componentWillUnmount() { }
 
     render() {
         return <div>
