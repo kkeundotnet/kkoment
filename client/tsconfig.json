@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
         "jsx": "react",
         "lib": ["dom", "es6"],
         "module": "es6",
@@ -13,10 +12,10 @@
         "noUnusedParameters": true,
         "preserveConstEnums": true,
         "removeComments": true,
-        "strict": true,
+        "strict": true
     },
     "files": [
         "src/url.ts",
-        "src/main.tsx",
+        "src/main.tsx"
     ]
 }
