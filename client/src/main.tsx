@@ -422,7 +422,7 @@ class Notice extends React.Component {
     render() {
         return <p style={{ fontSize: 'small' }}>
             &#x26A0; 비밀번호는 글쓴이를 구분하는 용도로만 사용합니다.<br />
-            &#x26A0; 댓글은 <a href='https://github.com/kkeundotnet/kkmarkdown/blob/master/syntax.md'>다소 제한된 마크다운 문법</a>으로 쓸 수 있습니다.
+            &#x26A0; 댓글은 <a href='https://kkeundotnet.github.io/kkmarkdown/kkmarkdown/syntax.html'>다소 제한된 마크다운 문법</a>으로 쓸 수 있습니다.
         </p>;
     }
 }
