@@ -36,6 +36,11 @@
     padding: 0px 0px 0px 40px;
 }
 
+.kkoment-text pre>code {
+    display: block;
+    overflow-x: auto;
+}
+
 .kkoment-hr {
     border-width: 0.5px;
     border-style: dashed;
