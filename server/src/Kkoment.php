@@ -113,7 +113,7 @@ class Kkoment
     public function add(string $name, string $pw, string $text): void
     {
         global $kkoment_config;
-        $text = (new Kkmarkdown($kkoment_config->kkmarkdown_bin_path))->transform($text);
+        $text = (new Kkmarkdown($kkoment_config->kkmarkdown_bin_path))->trans($text);
         $time = date(DATE_ATOM, time());
 
         $db = KkomentUtil::get_db($kkoment_config->db_path);
