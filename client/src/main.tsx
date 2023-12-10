@@ -1,7 +1,7 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import TextareaAutosize from 'react-textarea-autosize';
-import { kkoment_url } from "./url";
+import { kkoment_url } from './url';
 
 declare namespace kkmarkdown {
     function trans(s: string): string;
@@ -572,13 +572,13 @@ export function load(
 }
 
 type kkoment_num = {
-    "n": number,
-    "recent": boolean,
+    'n': number,
+    'recent': boolean,
 }
 
 export function load_n(
     domain_id: string,
-    num_cb = (num: kkoment_num) => num["n"].toString(),
+    num_cb = (num: kkoment_num) => num['n'].toString(),
     full_cb = () => { },
 ): void {
     function render(nums: { [key: string]: kkoment_num | undefined }) {
@@ -588,7 +588,7 @@ export function load_n(
             if (kkoment_num instanceof HTMLElement && kkoment_num.dataset.kkomentThreadId) {
                 let num = nums[kkoment_num.dataset.kkomentThreadId];
                 if (!num) {
-                    num = { "n": 0, "recent": false };
+                    num = { 'n': 0, 'recent': false };
                 }
                 kkoment_num.innerHTML = num_cb(num);
             }
