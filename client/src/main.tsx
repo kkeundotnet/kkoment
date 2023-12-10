@@ -126,7 +126,6 @@ class Comment extends React.Component<{
                 {' '}
                 {comment.id}
             </span>}
-            {comment.state === CommentState.New && '실제 사용될 이모티콘은 서버 측에서 계산됩니다.'}
         </td>;
 
         return <div>
@@ -283,17 +282,17 @@ class InputForm extends React.Component<input_form_props, input_form_state> {
         const text = this.state.text_area;
 
         if (name === '') {
-            this.error_msg('이름이 비었습니다.');
+            this.error_msg('이름!');
             return
         }
 
         if (pw === '') {
-            this.error_msg('비밀번호가 비었습니다.');
+            this.error_msg('비밀번호!');
             return
         }
 
         if (text === '') {
-            this.error_msg('댓글이 비었습니다.');
+            this.error_msg('댓글!');
             return
         }
 
@@ -362,7 +361,7 @@ class InputForm extends React.Component<input_form_props, input_form_state> {
             />
         </p>;
 
-        const text_area = <TextareaAutosize placeholder='마크다운 문법으로 댓글을 써 봅니다.'
+        const text_area = <TextareaAutosize placeholder='댓글'
             className='kkoment-text-area'
             value={this.state.text_area}
             onChange={this.handle_text_area_change}
@@ -421,8 +420,7 @@ class InputForm extends React.Component<input_form_props, input_form_state> {
 class Notice extends React.Component {
     render() {
         return <p style={{ fontSize: 'small' }}>
-            &#x26A0; 비밀번호는 글쓴이를 구분하는 용도로만 사용합니다.<br />
-            &#x26A0; 댓글은 <a href='https://kkeundotnet.github.io/kkmarkdown/kkmarkdown/syntax.html'>다소 제한된 마크다운 문법</a>으로 쓸 수 있습니다.
+            &#x26A0; <a href='https://kkeundotnet.github.io/kkmarkdown/kkmarkdown/syntax.html'>kkmarkdown 지원 문법</a>
         </p>;
     }
 }
@@ -501,7 +499,7 @@ class Load extends React.Component<load_props, load_state> {
             comment.state = CommentState.Read;
         }
         this.setState({
-            loading_msg: comments.length === 0 ? '아직 댓글이 없습니다.' : null,
+            loading_msg: comments.length === 0 ? '아직 댓글 없음.' : null,
             comments: comments,
             initialized: true,
         });
@@ -555,15 +553,15 @@ export function load(
 ): void {
     const div = document.getElementById(div_id);
     if (!div) {
-        alert(`꼬멘트: ${div_id}를 못 찾았습니다.`);
+        alert(`꼬멘트: ${div_id} 못 찾았음.`);
         return;
     }
     if (domain_id === '') {
-        alert(`꼬멘트: domain_id가 비었습니다.`);
+        alert(`꼬멘트: domain_id 비었음.`);
         return;
     }
     if (thread_id === '') {
-        alert(`꼬멘트: thread_id가 비었습니다.`);
+        alert(`꼬멘트: thread_id 비었음.`);
         return;
     }
 
