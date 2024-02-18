@@ -46,6 +46,7 @@ class Kkoment
         KkomentUtil::echo_json($all);
     }
 
+    /** @param array<string, array{n:int, recent:bool}> $counts */
     private static function incr_counts(string $thread_id, string $time, array &$counts): void
     {
         if (array_key_exists($thread_id, $counts)) {

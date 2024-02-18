@@ -14,6 +14,7 @@ class KkomentConfig
     public readonly string $kkmarkdown_php_path;
     public readonly string $vendor_autoload_path;
 
+    /** @param array<string, string> $config */
     private static function get_field_path(
         array $config,
         string $key,

@@ -43,7 +43,14 @@ class KkomentUtil
         return $db;
     }
 
-    public static function get_field_exn(array $arr, string $key, $default = null)
+    /**
+     * @template K
+     * @template V
+     * @param array<K, V> $arr
+     * @param ?V $default
+     * @return V
+     */
+    public static function get_field_exn(array $arr, string $key, $default = null): mixed
     {
         return $arr[$key] ?? (function () use ($default, $key) {
             if (!is_null($default)) {
@@ -57,7 +64,8 @@ class KkomentUtil
         })();
     }
 
-    public static function echo_json(array $arr)
+    /** @param array $var */
+    public static function echo_json(array $arr): void
     {
         header('Content-Type: application/json');
         echo(json_encode($arr));

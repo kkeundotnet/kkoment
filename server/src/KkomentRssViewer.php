@@ -35,6 +35,15 @@ class KkomentRssViewer extends KkRssViewer
         return "https://{$domain_id}/{$thread_id}";
     }
 
+    /**
+     * @pararm array{
+     *   id: int,
+     *   thread_id: string,
+     *   name: string,
+     *   text: string,
+     *   time: string,
+     * } $row
+     */
     private static function item_of(string $domain_id, array $row): KkRssItem
     {
         $id = $row['id'];
@@ -51,7 +60,8 @@ class KkomentRssViewer extends KkRssViewer
         );
     }
 
-    private static function init_items(string $domain_id): array /* KkRssItem */
+    /** @return KkRssItem[] */
+    private static function init_items(string $domain_id): array
     {
         global $kkoment_config;
         $db = KkomentUtil::get_db($kkoment_config->db_path);
