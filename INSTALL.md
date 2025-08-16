@@ -3,10 +3,8 @@
 
 ## PHP 설치
 
-버전 8.1
-
 ```
-$ sudo apt install php8.1{,-{cli,common,mbstring,opcache,readline,sqlite3,xml}}
+$ sudo apt install php{,-{cli,common,mbstring,opcache,readline,sqlite3,xml}}
 ```
 
 ## PHP 라이브러리 설치
