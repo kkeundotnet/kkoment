@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import * as ReactDOM from 'react-dom/client';
 import TextareaAutosize from 'react-textarea-autosize';
 import { kkoment_url } from './url';
 
@@ -187,7 +187,7 @@ type input_form_state = {
 
 class InputForm extends React.Component<input_form_props, input_form_state> {
     need_update_preview: boolean = false;
-    text_area_ref: React.RefObject<HTMLTextAreaElement>;
+    text_area_ref: React.RefObject<HTMLTextAreaElement | null>;
 
     constructor(props: input_form_props) {
         super(props);
@@ -566,7 +566,8 @@ export function load(
     }
 
     load_css();
-    ReactDOM.render(<Load domain_id={domain_id} thread_id={thread_id} />, div);
+    const root = ReactDOM.createRoot(div);
+    root.render(<Load domain_id={domain_id} thread_id={thread_id} />);
 }
 
 type kkoment_num = {
