@@ -11,7 +11,7 @@ use Kkeundotnet\Kkrouter\KkString as KkRouterString;
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        $router = new KkRouter(function () {
+        $router = new KkRouter(function (): void {
             if (KkomentUtil::DEBUG) {
                 KkomentUtil::die404('Failed to route');
             } else {
@@ -21,7 +21,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
         $router->add(
             [],
-            function () {
+            function (): void {
                 $domain_id = KkomentUtil::get_field_exn($_GET, 'domain_id');
                 $thread_id = $_GET['thread_id'] ?? null;
                 $only_num = $_GET['only_num'] ?? null;
@@ -39,7 +39,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
         $router->add(
             [new KkRouterString('feed.xml')],
-            function () {
+            function (): void {
                 $domain_id = KkomentUtil::get_field_exn($_GET, 'domain_id');
                 header('Access-Control-Allow-Origin: *');
                 (new KkomentRssViewer($domain_id))->view();

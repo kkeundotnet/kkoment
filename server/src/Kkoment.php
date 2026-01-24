@@ -86,7 +86,7 @@ class Kkoment
         $chars_leng = strlen($chars);
         $salt = '';
         for ($i = 0; $i < $length; $i++) {
-            $salt .= $chars[rand(0, $chars_leng - 1)];
+            $salt .= $chars[random_int(0, $chars_leng - 1)];
         }
         return $salt;
     }
